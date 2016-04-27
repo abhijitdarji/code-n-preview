@@ -121,7 +121,7 @@
 
                                 angular.forEach(scope.vm.files, function (file) {
 
-                                    if (file.name.match(/\.js$/i)) {
+                                    if (file.ext == 'js') {
 
                                         var el = doc.querySelector("script[src=\"" + file.name + "\"]");
 
@@ -150,7 +150,7 @@
 
                                 angular.forEach(scope.vm.files, function (file) {
 
-                                    if (file.name.match(/\.css$/i)) {
+                                    if (file.ext == 'css') {
 
                                         var el = doc.querySelector("link[href=\"" + file.name + "\"]");
 

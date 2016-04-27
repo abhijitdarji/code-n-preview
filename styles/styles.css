@@ -1,4 +1,7 @@
-#container {
+body{
+    font-size: 14px;
+}
+#CodeContainer {
     background: #999;
     position: absolute;
     top: 50px;
@@ -28,4 +31,39 @@
 .ui-layout-center,
 .ui-layout-east {
     padding: 0;
+}
+
+/*icon colors*/
+.html{
+    color: darkorange;
+}
+.css{
+    color: deepskyblue;
+}
+.sass .scss{
+    color: palevioletred;
+}
+.less{
+    color: cornflowerblue;
+}
+.md .markdown{
+    color: saddlebrown;
+}
+.jade{
+    color: aqua;
+}
+.js {
+    color: lightsalmon;
+}
+.styl{
+    color: lawngreen;
+}
+.coffee{
+    color: sandybrown;
+}
+.edit{
+    color: green;
+}
+.delete{
+    color: red;
 }

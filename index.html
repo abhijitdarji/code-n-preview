@@ -8,6 +8,8 @@
     <script type="text/javascript" src="scripts/layout/jquery.js"></script>
     <script type="text/javascript" src="scripts/layout/jquery-ui.js"></script>
     <script type="text/javascript" src="scripts/layout/jquery.layout.js"></script>
+    <script type="text/javascript" src="scripts/layout/bootstrap.min.js"></script>
+
     <script>
         var less=less||{};less.async = true;
     </script>
@@ -24,7 +26,7 @@
 
 		$(document).ready(function(){
 
-			myLayout = $('#container').layout({
+			myLayout = $('#CodeContainer').layout({
 				west__minSize:	50,
 				center__childOptions: {
 					west__size: "50%",
@@ -54,10 +56,14 @@
     <script src="scripts/angular/ui-codemirror.js"></script>
     <script src="scripts/angular/angular-local-storage.min.js"></script>
 
-
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
+    <!--fonts generated using fontello
+      - svgs from pictonic, octicons, font-awesome, fontelico, MFG labs, Zocial, Elusive, Web Symbols-->
+    <link rel="stylesheet" type="text/css" href="styles/cnpfonts.css">
+    <link rel="stylesheet" type="text/css" href="styles/cnpfonts-animation.css">
     <link rel="stylesheet" type="text/css" href="styles/editor.css">
     <link rel="stylesheet" type="text/css" href="styles/layout.css">
-    
+
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
 </head>
@@ -65,27 +71,79 @@
 <body ng-controller="appController as vm">
 
     <header>
-        Code & Preview
-        <div>
-            <a href="" onclick="setWidth('iphone');return false;">iPhone</a>
-            <a href="" onclick="setWidth('iphone');return false;">Desktop</a>
-            <a href="" ng-click="vm.previewWindow();">Preview Window</a>
-        </div>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Code & Preview</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a title="Mobile" href="" onclick="setWidth('iphone');return false;"><i class="icon-mobile"></i></a></li>
+                        <li><a title="Tablet" href="" onclick="setWidth('iphone');return false;"><i class="icon-tablet"></i></a></li>
+                        <li><a title="Laptop" href="" onclick="setWidth('iphone');return false;"><i class="icon-laptop"></i></a></li>
+                        <li><a title="Desktop" href="" onclick="setWidth('iphone');return false;"><i class="icon-desktop"></i></a></li>
+                        <li><a title="Preview Window" href="" ng-click="vm.previewWindow();"><i class="icon-link-ext"></i></a></li>
+                        <li><a title="Download" href="" ng-click="vm.downloadZip();"><i class="icon-download"></i></a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
     </header>
 
-    <div id="container">
+    <div id="CodeContainer">
 
         <div class="ui-layout-west">
-            <div ng-repeat="file in vm.files">
-                <a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+            <div ng-repeat="file in vm.files" ng-switch on="file.ext">
+                <div class="active" ng-switch-when="html" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
+                    <i class="html icon-html5-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                    <div class="pull-right" ng-show="vm.hoverItem[$index]">
+                        <i class="edit icon-pencil"></i><i class="delete icon-cancel"></i>
+                    </div>
+                </div>
+                <div ng-switch-when="js">
+                    <i class="js icon-prog-js02"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="css">
+                    <i class="css icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="less">
+                    <i class="less icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="sass">
+                    <i class="sass icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="scss">
+                    <i class="scss icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="coffee">
+                    <i class="coffee icon-prog-coffeescr"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="md">
+                    <i class="md icon-markdown"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="markdown">
+                    <i class="markdown icon-markdown"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="jade">
+                    <i class="jade icon-html5-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
+                <div ng-switch-when="styl">
+                    <i class="styl icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                </div>
             </div>
             <br/>
             <div>
                 <input type="text" ng-model="vm.newFile" ng-show="vm.addNew">
                 <a href="" ng-click="vm.addNewFile(vm.newFile)" ng-show="vm.addNew">Save</a>
-                <a href="" ng-click="vm.addNew = true;" ng-hide="vm.addNew">+ New File</a>
-                <br/>
-                <a href="" ng-click="vm.downloadZip();">Download</a>
+                <a href="" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
             </div>
         </div>
 
@@ -106,10 +164,10 @@
 
     </div>
 
-    <script type="text/javascript" src="scripts/app.js" ></script>
-    <script type="text/javascript" src="scripts/compile.service.js" ></script>
-    <script type="text/javascript" src="scripts/compile.directive.js" ></script>
-    <script type="text/javascript" src="scripts/app.controller.js" ></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/compile.service.js"></script>
+    <script type="text/javascript" src="scripts/compile.directive.js"></script>
+    <script type="text/javascript" src="scripts/app.controller.js"></script>
 </body>
 
 </html>

@@ -35,7 +35,8 @@
 
                         vm.files.push({
                             name: name,
-                            value: val
+                            value: val,
+                            ext: name.split('.').pop().toLowerCase()
                         });
                         saveFilesToLocal();
 
@@ -159,8 +160,8 @@
                         "Ctrl-Alt-F": function (cm) { beautify(cm) },
                         "F11": function (cm) {
                             cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-                            
-                             //show/hide the preview panes and resizer
+
+                            //show/hide the preview panes and resizer
                             if ($('.CodeMirror').hasClass('CodeMirror-fullscreen')) {
                                 $('#prevCenter').hide();
                                 $('.ui-layout-resizer').hide();
@@ -202,66 +203,43 @@
 
                     saveFilesToLocal();
 
-                    if (file.name.match(/\.html$/i)) {
-                        vm.editor.setOption('mode', 'text/html');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = html_beautify(source);
+                    switch (file.ext) {
+                        case 'html':
+                            vm.editor.setOption('mode', 'text/html');
+                            //source = file.value;
+                            //vm.dynHtml = html_beautify(source);
+                            break;
+                        case 'js':
+                            vm.editor.setOption('mode', 'text/javascript');
+                            break;
+                        case 'css':
+                            vm.editor.setOption('mode', 'text/css');
+                            break;
+                        case 'less':
+                            vm.editor.setOption('mode', 'text/x-less');
+                            break;
+                        case 'coffee':
+                            vm.editor.setOption('mode', 'text/x-coffeescript');
+                            break;
+                        case 'jade':
+                            vm.editor.setOption('mode', 'text/x-jade');
+                            break;
+                        case 'md':
+                        case 'markdown':
+                            vm.editor.setOption('mode', 'text/x-markdown');
+                            break;
+                        case 'sass':
+                            vm.editor.setOption('mode', 'text/x-sass');
+                            break;
+                        case 'scss':
+                            vm.editor.setOption('mode', 'text/x-scss');
+                            break;
+                        case 'styl':
+                            vm.editor.setOption('mode', 'text/x-styl');
+                            break;
                     }
-                    else if (file.name.match(/\.js$/i)) {
-                        vm.editor.setOption('mode', 'text/javascript');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = js_beautify(source);
-                    }
-                    else if (file.name.match(/\.css$/i)) {
-                        vm.editor.setOption('mode', 'text/css');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
-                    else if (file.name.match(/\.less$/i)) {
-                        vm.editor.setOption('mode', 'text/x-less');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
-                    else if (file.name.match(/\.coffee$/i)) {
-                        vm.editor.setOption('mode', 'text/x-coffeescript');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
-                    else if (file.name.match(/\.jade$/i)) {
-                        vm.editor.setOption('mode', 'text/x-jade');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
-                    else if (file.name.match(/\.(md|markdown)$/i)) {
-                        vm.editor.setOption('mode', 'text/x-markdown');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
-                    else if (file.name.match(/\.sass$/i)) {
-                        vm.editor.setOption('mode', 'text/x-sass');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
-                    else if (file.name.match(/\.scss$/i)) {
-                        vm.editor.setOption('mode', 'text/x-scss');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
-                    else if (file.name.match(/\.styl$/i)) {
-                        vm.editor.setOption('mode', 'text/x-styl');
-                        //source = file.value;
-                        vm.dynFile = file;
-                        //vm.dynHtml = css_beautify(source);
-                    }
+
+                    vm.dynFile = file;
                     //vm.editor.setValue(source);
                 }
 
