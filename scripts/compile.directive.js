@@ -5,8 +5,8 @@
         .module('myapp')
         .directive('compile', compile);
 
-    compile.$inject = ['$compile', 'CompileService', 'HTML_BEAUTIFY', '$q'];
-    function compile($compile, CompileService, HTML_BEAUTIFY, $q) {
+    compile.$inject = ['$compile', 'CompileService', 'HTML_BEAUTIFY', '$q', 'COMPILE_TYPES'];
+    function compile($compile, CompileService, HTML_BEAUTIFY, $q, COMPILE_TYPES) {
         // Usage:
         // watches editor for changes and generates preview html
         var directive = {
@@ -48,8 +48,8 @@
                         'SCSS': '.css',
                         'STYL': '.css'
                     }
-                    if (name.match(/\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i)) {
-                        var type = name.match(/\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i)[0],
+                    if (name.match(COMPILE_TYPES)) {
+                        var type = name.match(COMPILE_TYPES)[0],
                             fileExt, compileType, out;
                         var regex = new RegExp(type.substring(1, type.length), "i");
                         for (var key in master) {

@@ -19,5 +19,7 @@
         .constant('JADE', window.jade)
         .constant('MARKDOWN', window.markdown)
         .constant('SASS', window.Sass)
-        .constant('STYLUS',window.stylus);
+        .constant('STYLUS', window.stylus)
+        .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown)$/i)
+        .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i);
 } ());

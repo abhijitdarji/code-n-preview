@@ -9,7 +9,8 @@
             'EMMET_CODEMIRROR',
             'JSZIP',
             'SAVEAS',
-            function (localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS) {
+            'FILE_TYPES',
+            function (localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES) {
                 var vm = this;
                 vm.dynFile = {};
 
@@ -30,7 +31,7 @@
                         return;
                     };
 
-                    if (name.match(/\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown)$/i)) {
+                    if (name.match(FILE_TYPES)) {
 
                         vm.files.push({
                             name: name,
@@ -158,9 +159,24 @@
                         "Ctrl-Alt-F": function (cm) { beautify(cm) },
                         "F11": function (cm) {
                             cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                            
+                             //show/hide the preview panes and resizer
+                            if ($('.CodeMirror').hasClass('CodeMirror-fullscreen')) {
+                                $('#prevCenter').hide();
+                                $('.ui-layout-resizer').hide();
+                            }
+                            else {
+                                $('#prevCenter').show();
+                                $('.ui-layout-resizer').show();
+                            }
                         },
                         "Esc": function (cm) {
-                            if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                            if (cm.getOption("fullScreen")) {
+                                cm.setOption("fullScreen", false)
+                                //show the preview panes and resizer
+                                $('#prevCenter').show();
+                                $('.ui-layout-resizer').show();
+                            };
                         }
                     },
                     // define Emmet output profile
@@ -271,6 +287,9 @@
                     }
                     else if (mode == "text/x-less") {
                         output = CSS_BEAUTIFY(source);
+                    }
+                    else {
+                        output = source;
                     }
 
                     if (the.editor) {
