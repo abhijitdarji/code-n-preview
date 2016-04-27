@@ -180,9 +180,23 @@
                                 iframeHtml = HTML_BEAUTIFY(get_doctype(doc) + doc.documentElement.outerHTML);
 
                             }
+                            else if (scope.vm.dynFile.name.match(/\.(md|markdown)$/i)) {
+
+                                var cont = "<article class='markdown-body'>" + html + '</article>';
+                                var doc = (new DOMParser()).parseFromString(cont, "text/html");
+
+                                var link = doc.createElement('link');
+                                link.href = 'styles/github-markdown.css';
+                                link.rel = 'stylesheet';
+                                
+                                doc.getElementsByTagName('head')[0].appendChild(link);
+
+                                iframeHtml = doc.documentElement.outerHTML;
+                            }
                             else {
                                 iframeHtml = html;
                             }
+                            
                             scope.vm.previewHTML = iframeHtml;
                             var preview = ele[0].contentDocument || ele[0].contentWindow.document;
                             if (ele[0].contentWindow.angular) delete ele[0].contentWindow.angular;

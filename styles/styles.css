@@ -1,6 +1,9 @@
 body{
     font-size: 14px;
 }
+.navbar-fixed-top{
+    border-bottom: 1px solid darkslategrey;
+}
 #CodeContainer {
     background: #999;
     position: absolute;
