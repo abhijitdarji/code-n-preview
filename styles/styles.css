@@ -1,0 +1,43 @@
+  #container {
+    background: #999;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.editor,
+.previewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.previewer .previewer-iframe {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    /*overflow: hidden;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.previewer .previewer-iframe.iphone {
+    width: 480px;
+}
+
+.previewer .previewer-iframe.desktop {
+    width: 100%;
+}
+
+.ui-layout-center,
+.ui-layout-east {
+    padding: 0;
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="myapp" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Code & Preview</title>
+
+    <script type="text/javascript" src="scripts/layout/jquery.js"></script>
+    <script type="text/javascript" src="scripts/layout/jquery-ui.js"></script>
+    <script type="text/javascript" src="scripts/layout/jquery.layout.js"></script>
+    <script>
+        var less=less||{};less.async = true;
+    </script>
+    <script type="text/javascript" src="scripts/compilers/less.min.js"></script>
+    <script type="text/javascript" src="scripts/compilers/coffee-script.min.js"></script>
+    <script type="text/javascript" src="scripts/compilers/jade.min.js"></script>
+    <script type="text/javascript" src="scripts/compilers/markdown.min.js"></script>
+    <!--<script type="text/javascript" src="scripts/compilers/sass.min.js"></script>-->
+    <script type="text/javascript" src="scripts/compilers/sass.sync.min.js"></script>
+    <script type="text/javascript" src="scripts/compilers/stylus.min.js"></script>
+
+    <script type="text/javascript">
+        var myLayout;
+
+		$(document).ready(function(){
+
+			myLayout = $('#container').layout({
+				west__minSize:	50,
+				center__childOptions: {
+					west__size: "50%",
+                    center__size: "50%",
+					center__maskContents: true
+				}
+				
+			});
+	
+		});
+        
+         function setWidth(size){
+            $('#preview').toggleClass(size);
+        }
+    </script>
+
+
+    <script src="scripts/editor/codemirror-compressed.js"></script>
+    <script src="scripts/beautify/beautify.js"></script>
+    <script src="scripts/beautify/beautify-css.js"></script>
+    <script src="scripts/beautify/beautify-html.js"></script>
+    <script src="scripts/editor/emmet.js"></script>
+    <script src="scripts/download/jszip.min.js"></script>
+    <script src="scripts/download/FileSaver.min.js"></script>
+
+    <script src="scripts/angular/angular.min.js"></script>
+    <script src="scripts/angular/ui-codemirror.js"></script>
+    <script src="scripts/angular/angular-local-storage.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="styles/editor.css">
+    <link rel="stylesheet" type="text/css" href="styles/layout.css">
+    
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+
+</head>
+
+<body ng-controller="appController as vm">
+
+    <header>
+        Code & Preview
+        <div>
+            <a href="" onclick="setWidth('iphone');return false;">iPhone</a>
+            <a href="" onclick="setWidth('iphone');return false;">Desktop</a>
+            <a href="" ng-click="vm.previewWindow();">Preview Window</a>
+        </div>
+    </header>
+
+    <div id="container">
+
+        <div class="ui-layout-west">
+            <div ng-repeat="file in vm.files">
+                <a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+            </div>
+            <br/>
+            <div>
+                <input type="text" ng-model="vm.newFile" ng-show="vm.addNew">
+                <a href="" ng-click="vm.addNewFile(vm.newFile)" ng-show="vm.addNew">Save</a>
+                <a href="" ng-click="vm.addNew = true;" ng-hide="vm.addNew">+ New File</a>
+                <br/>
+                <a href="" ng-click="vm.downloadZip();">Download</a>
+            </div>
+        </div>
+
+        <div class="ui-layout-center">
+            <div class="ui-layout-west">
+                <div class="editor">
+                    <textarea ui-codemirror="{ onLoad : vm.codemirrorLoaded }" ui-codemirror-opts="vm.editorOptions" id="htmlTxt" ng-model="vm.dynFile.value"
+                        ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"></textarea>
+                </div>
+            </div>
+            <div class="ui-layout-center">
+                <div class="previewer">
+                    <iframe class="previewer-iframe" src="about:blank" compile="vm.dynFile.value" id="preview" width="100%" height="100%" scrolling="auto"
+                        frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="scripts/app.js" ></script>
+    <script type="text/javascript" src="scripts/compile.service.js" ></script>
+    <script type="text/javascript" src="scripts/compile.directive.js" ></script>
+    <script type="text/javascript" src="scripts/app.controller.js" ></script>
+</body>
+
+</html>
