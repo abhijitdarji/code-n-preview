@@ -152,7 +152,8 @@
                     matchBrackets: true,
                     matchTags: { bothTags: true },
                     foldGutter: true,
-                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                    gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+                    lint: true,
                     extraKeys: {
                         "Ctrl-Space": "autocomplete",
                         "Ctrl-J": "toMatchingTag",
@@ -206,36 +207,46 @@
                     switch (file.ext) {
                         case 'html':
                             vm.editor.setOption('mode', 'text/html');
+                            vm.editor.setOption('lint', true);
                             //source = file.value;
                             //vm.dynHtml = html_beautify(source);
                             break;
                         case 'js':
                             vm.editor.setOption('mode', 'text/javascript');
+                            vm.editor.setOption('lint', true);
                             break;
                         case 'css':
                             vm.editor.setOption('mode', 'text/css');
+                            vm.editor.setOption('lint', true);
                             break;
                         case 'less':
                             vm.editor.setOption('mode', 'text/x-less');
+                            vm.editor.setOption('lint', false);
                             break;
                         case 'coffee':
                             vm.editor.setOption('mode', 'text/x-coffeescript');
+                            vm.editor.setOption('lint', true);
                             break;
                         case 'jade':
                             vm.editor.setOption('mode', 'text/x-jade');
+                            vm.editor.setOption('lint', false);
                             break;
                         case 'md':
                         case 'markdown':
                             vm.editor.setOption('mode', 'text/x-markdown');
+                            vm.editor.setOption('lint', false);
                             break;
                         case 'sass':
                             vm.editor.setOption('mode', 'text/x-sass');
+                            vm.editor.setOption('lint', false);
                             break;
                         case 'scss':
                             vm.editor.setOption('mode', 'text/x-scss');
+                            vm.editor.setOption('lint', false);
                             break;
                         case 'styl':
                             vm.editor.setOption('mode', 'text/x-styl');
+                            vm.editor.setOption('lint', false);
                             break;
                     }
 
