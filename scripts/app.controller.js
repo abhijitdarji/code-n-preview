@@ -164,20 +164,20 @@
 
                             //show/hide the preview panes and resizer
                             if ($('.CodeMirror').hasClass('CodeMirror-fullscreen')) {
-                                $('#prevCenter').hide();
-                                $('.ui-layout-resizer').hide();
+                                window.myLayoutOuter.close('west');
+                                window.myLayoutInner.sizePane('west','100%');
                             }
                             else {
-                                $('#prevCenter').show();
-                                $('.ui-layout-resizer').show();
+                                window.myLayoutOuter.open('west');
+                                window.myLayoutInner.sizePane('west','50%');
                             }
                         },
                         "Esc": function (cm) {
                             if (cm.getOption("fullScreen")) {
                                 cm.setOption("fullScreen", false)
                                 //show the preview panes and resizer
-                                $('#prevCenter').show();
-                                $('.ui-layout-resizer').show();
+                                 window.myLayoutOuter.open('west');
+                                 window.myLayoutInner.sizePane('west','50%');
                             };
                         }
                     },

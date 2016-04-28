@@ -354,7 +354,7 @@ span.CodeMirror-selectedtext { background: none; }
   position: fixed;
   white-space: pre;
   white-space: pre-wrap;
-  z-index: 100;
+  z-index: 2000;
   max-width: 600px;
   opacity: 0;
   transition: opacity .4s;
@@ -438,7 +438,7 @@ span.CodeMirror-selectedtext { background: none; }
 /*full screen*/
 .CodeMirror-fullscreen {
   position: fixed;
-  top: 50px; left: 0; right: 0; bottom: 0;
+  top: 50px; left: 5px; right: 5px; bottom: 0;
   height: auto;
   z-index: 9;
 }
