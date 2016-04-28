@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    angular.module('myapp', ['ui.codemirror', 'LocalStorageModule'])
+    angular.module('myapp', ['ui.codemirror', 'ui.validate', 'LocalStorageModule'])
         .config(function (localStorageServiceProvider) {
             localStorageServiceProvider
                 .setPrefix('cnpApp')

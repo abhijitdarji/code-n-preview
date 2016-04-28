@@ -18,7 +18,7 @@
     <script type="text/javascript" src="scripts/compilers/markdown.min.js"></script>
     <script type="text/javascript" src="scripts/compilers/sass.sync.min.js"></script>
     <script type="text/javascript" src="scripts/compilers/stylus.min.js"></script>
-    
+
     <script type="text/javascript" src="scripts/layout/layout.config.js"></script>
 
     <script src="scripts/editor/codemirror-compressed.js"></script>
@@ -36,12 +36,13 @@
     <script src="scripts/editor/htmlhint.js"></script>
     <script src="scripts/editor/coffeelint.js"></script>
     <script src="scripts/editor/coffeescript-lint.js"></script>
-    
+
 
     <script src="scripts/download/jszip.min.js"></script>
     <script src="scripts/download/FileSaver.min.js"></script>
 
     <script src="scripts/angular/angular.min.js"></script>
+    <script src="scripts/angular/validate.min.js"></script>
     <script src="scripts/angular/ui-codemirror.js"></script>
     <script src="scripts/angular/angular-local-storage.min.js"></script>
 
@@ -72,12 +73,24 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a title="Mobile" href="" onclick="setWidth('iphone');return false;"><i class="icon-mobile"></i></a></li>
-                        <li><a title="Tablet" href="" onclick="setWidth('iphone');return false;"><i class="icon-tablet"></i></a></li>
-                        <li><a title="Laptop" href="" onclick="setWidth('iphone');return false;"><i class="icon-laptop"></i></a></li>
-                        <li><a title="Desktop" href="" onclick="setWidth('iphone');return false;"><i class="icon-desktop"></i></a></li>
-                        <li><a title="Preview Window" href="" ng-click="vm.previewWindow();"><i class="icon-link-ext"></i></a></li>
-                        <li><a title="Download" href="" ng-click="vm.downloadZip();"><i class="icon-download"></i></a></li>
+                        <li class="active">
+                            <a data-toggle="tooltip" data-placement="bottom" title="Mobile" href="" onclick="setWidth('iphone');return false;"><i class="icon-mobile mobile"></i></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tooltip" data-placement="bottom" title="Tablet" href="" onclick="setWidth('iphone');return false;"><i class="icon-tablet tablet"></i></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tooltip" data-placement="bottom" title="Laptop" href="" onclick="setWidth('iphone');return false;"><i class="icon-laptop laptop"></i></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tooltip" data-placement="bottom" title="Desktop" href="" onclick="setWidth('iphone');return false;"><i class="icon-desktop desktop"></i></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tooltip" data-placement="bottom" title="Preview Window" href="" ng-click="vm.previewWindow();"><i class="icon-link-ext newwindow"></i></a>
+                        </li>
+                        <li>
+                            <a data-toggle="tooltip" data-placement="bottom" title="Download" href="" ng-click="vm.downloadZip();"><i class="icon-download download"></i></a>
+                        </li>
                     </ul>
                 </div>
                 <!--/.nav-collapse -->
@@ -128,8 +141,26 @@
             </div>
             <br/>
             <div>
-                <input type="text" ng-model="vm.newFile" ng-show="vm.addNew">
-                <a href="" ng-click="vm.addNewFile(vm.newFile)" ng-show="vm.addNew">Save</a>
+                <form name="myForm" ng-submit="vm.addNewFile(vm.newFile)" ng-show="vm.addNew" novalidate>
+                    <div class="alert alert-danger fade in" ng-show="!myForm.filename.$pristine && myForm.filename.$invalid">
+                        <span ng-show="myForm.filename.$error.required">Filename is required.</span>
+                        <span ng-show="myForm.filename.$error.pattern">File extension not supported.</span>
+                        <span ng-show="myForm.filename.$error.used">File cannot be added. File with this name already exists.</span>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.filename.$invalid && !myForm.filename.$pristine }">
+                        <input name="filename" placeholder="enter filename" type="text" ng-model="vm.newFile" ng-pattern="vm.fileTypes"
+                        ui-validate="{used : 'vm.fileExists($value)' }" class="form-control input-sm" required>
+                    </div>
+                    <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary btn-sm">Save</button>
+                    <button type="button" ng-click="vm.addNew = false;" class="btn btn-default btn-sm">Cancel</button>
+                    <br/> <br/>
+                    <div class="alert alert-info">
+                        <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl
+                    </div>
+                </form>
+                <!--<input type="text" ng-model="vm.newFile" ng-show="vm.addNew">
+                <a href="" ng-click="vm.addNewFile(vm.newFile)" ng-show="vm.addNew">Save</a> <a href="" ng-click="vm.addNew = false;"
+                    ng-show="vm.addNew">Cancel</a>-->
                 <a href="" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
             </div>
         </div>

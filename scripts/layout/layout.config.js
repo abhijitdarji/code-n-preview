@@ -24,6 +24,8 @@ $(document).ready(function () {
 
     window.myLayoutOuter = myLayoutOuter;
     window.myLayoutInner = myLayoutInner;
+    
+    $('[data-toggle="tooltip"]').tooltip();
 
 });
 

@@ -70,3 +70,19 @@ body{
 .delete{
     color: red;
 }
+.mobile .tablet .laptop .desktop{
+    color: black;
+}
+.newwindow{
+    color: darkblue;
+}
+.download{
+    color: forestgreen;
+}
+
+
+/*form alert*/
+.alert {
+  padding: 5px;
+  font-size: 12px;
+}

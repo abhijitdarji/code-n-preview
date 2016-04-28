@@ -15,10 +15,18 @@
                 vm.dynFile = {};
 
                 vm.files = [];
+                vm.fileTypes = FILE_TYPES;
                 vm.previewHTML = '';
 
-                function saveFilesToLocal() {
+                vm.saveFilesToLocal = function () {
                     if (localStorageService.isSupported) localStorageService.set('appFiles', vm.files);
+                };
+
+                vm.fileExists = function ($value) {
+                    var exists = vm.files.some(function (file) {
+                        return file.name == $value
+                    });
+                    return !exists;
                 };
 
                 vm.addNewFile = function (name, val) {
@@ -38,7 +46,7 @@
                             value: val,
                             ext: name.split('.').pop().toLowerCase()
                         });
-                        saveFilesToLocal();
+                        vm.saveFilesToLocal();
 
                         vm.newFile = ''
                         vm.addNew = false;
@@ -126,7 +134,7 @@
                             vm.addNewFile('scripts.js', strJS);
                             vm.addNewFile('styles.less', strLess);
 
-                            saveFilesToLocal();
+                            vm.saveFilesToLocal();
                         }
                     }
                     else {
@@ -165,19 +173,19 @@
                             //show/hide the preview panes and resizer
                             if ($('.CodeMirror').hasClass('CodeMirror-fullscreen')) {
                                 window.myLayoutOuter.close('west');
-                                window.myLayoutInner.sizePane('west','100%');
+                                window.myLayoutInner.sizePane('west', '100%');
                             }
                             else {
                                 window.myLayoutOuter.open('west');
-                                window.myLayoutInner.sizePane('west','50%');
+                                window.myLayoutInner.sizePane('west', '50%');
                             }
                         },
                         "Esc": function (cm) {
                             if (cm.getOption("fullScreen")) {
                                 cm.setOption("fullScreen", false)
                                 //show the preview panes and resizer
-                                 window.myLayoutOuter.open('west');
-                                 window.myLayoutInner.sizePane('west','50%');
+                                window.myLayoutOuter.open('west');
+                                window.myLayoutInner.sizePane('west', '50%');
                             };
                         }
                     },
@@ -202,7 +210,7 @@
                         }
                     })
 
-                    saveFilesToLocal();
+                    vm.saveFilesToLocal();
 
                     switch (file.ext) {
                         case 'html':
