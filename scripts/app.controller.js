@@ -2,7 +2,8 @@
     "use strict";
     angular.module('myapp')
         .controller("appController",
-        ['localStorageService',
+        ['$window',
+            'localStorageService',
             'HTML_BEAUTIFY',
             'JS_BEAUTIFY',
             'CSS_BEAUTIFY',
@@ -10,7 +11,7 @@
             'JSZIP',
             'SAVEAS',
             'FILE_TYPES',
-            function (localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES) {
+            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES) {
                 var vm = this;
                 vm.dynFile = {};
 
@@ -30,11 +31,8 @@
                 };
 
                 vm.addNewFile = function (name, val) {
-                    var exists = vm.files.some(function (file) {
-                        return file.name == name
-                    });
 
-                    if (exists) {
+                    if (!vm.fileExists(name)) {
                         alert('File cannot be added. File with this name already exists.');
                         return;
                     };
@@ -57,6 +55,14 @@
                     }
 
                 };
+
+                vm.deleteFile = function (idx) {
+                    console.log(idx);
+                    if ($window.confirm('Are you sure you want to delete this file?')) {
+                        vm.files.splice(idx, 1);
+                        vm.saveFilesToLocal();
+                    }
+                }
 
                 init();
 

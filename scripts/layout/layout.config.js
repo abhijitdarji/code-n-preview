@@ -24,8 +24,10 @@ $(document).ready(function () {
 
     window.myLayoutOuter = myLayoutOuter;
     window.myLayoutInner = myLayoutInner;
-    
-    $('[data-toggle="tooltip"]').tooltip();
+
+    $('body').tooltip({
+        selector: '[data-toggle="tooltip"]'
+    });
 
 });
 
