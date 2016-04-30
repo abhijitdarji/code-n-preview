@@ -27,6 +27,7 @@
 * [jQuery](http://jquery.com)
 * [jQuery UI](http://jqueryui.com)
 * [jQuery Layout](http://layout.jquery-dev.com)
+* [KeyboardJS](https://github.com/RobertWHurst/KeyboardJS)
 * [Github Markdown CSS](https://github.com/sindresorhus/github-markdown-css)
 
 ##### Beautify
@@ -58,6 +59,7 @@ Generated using [Fontello](http://fontello.com)
 * Live Compilation
 
 ###### Keyboard shortcuts
+Editor:
 >"Ctrl-Space": Autocomplete html, javascript, anyword
 
 >"Ctrl-J": To Matching Tag
@@ -67,6 +69,9 @@ Generated using [Fontello](http://fontello.com)
 >"Ctrl-Alt-F": Beautify Code
 
 >"F11": Full screen editing mode, `Esc` to go back
+
+Global:
+>"Ctrl-Alt-N": Add new file
 
 ##### Previewer
 

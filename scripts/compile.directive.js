@@ -75,7 +75,7 @@
 
                 }
 
-                if (scope.vm.dynFile.name != null) {
+                if (scope.vm.dynFile.name != null && scope.vm.dynFile.value != '') {
 
                     compileSource(scope.vm.dynFile.name)
                         .then(function (result) {

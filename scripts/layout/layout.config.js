@@ -29,8 +29,9 @@ $(document).ready(function () {
         selector: '[data-toggle="tooltip"]'
     });
 
-});
+    keyboardJS.bind('ctrl + alt + n', function (e) {
+        $('#aNewFile').click();
+        $('[autofocus]:first').focus();
+    });
 
-function setWidth(size) {
-    $('#preview').toggleClass(size);
-}
+});

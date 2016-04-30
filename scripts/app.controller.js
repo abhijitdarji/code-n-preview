@@ -11,13 +11,15 @@
             'JSZIP',
             'SAVEAS',
             'FILE_TYPES',
-            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES) {
+            'SETTINGS',
+            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS) {
                 var vm = this;
                 vm.dynFile = {};
 
                 vm.files = [];
                 vm.fileTypes = FILE_TYPES;
                 vm.previewHTML = '';
+                vm.settings = {};
 
                 vm.saveFilesToLocal = function () {
                     if (localStorageService.isSupported) localStorageService.set('appFiles', vm.files);
@@ -149,6 +151,9 @@
                         vm.addNewFile('styles.less', strLess);
                     }
 
+                    //set the default settings
+                    vm.settings = SETTINGS;
+
                 }
 
 
@@ -200,6 +205,14 @@
                 };
 
                 vm.editorOptions = editorOptions;
+                vm.modelOptions = {
+                    updateOn: 'default blur',
+                    debounce: {
+                        default: vm.settings.preview_delay,
+                        blur: 0
+                    }
+                }
+
                 vm.codemirrorLoaded = function (_editor) {
                     EMMET_CODEMIRROR(_editor);
                     _editor.setSize("100%", "100%");
@@ -327,6 +340,14 @@
                     preview.open();
                     preview.write(vm.previewHTML);
                     preview.close();
+                };
+
+                vm.setDeviceSize = function (size, e) {
+                    angular.element('#preview').css({ width: size + 'px' });
+                };
+
+                vm.setFitSize = function () {
+                    angular.element('#preview').css({ width: '100%' });
                 };
 
             }])

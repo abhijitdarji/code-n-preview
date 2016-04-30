@@ -9,6 +9,7 @@
     <script type="text/javascript" src="scripts/layout/jquery-ui.js"></script>
     <script type="text/javascript" src="scripts/layout/jquery.layout.js"></script>
     <script type="text/javascript" src="scripts/layout/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/layout/keyboard.min.js"></script>
 
     <script type="text/javascript" src="scripts/compilers/less.config.js"></script>
 
@@ -69,21 +70,25 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Code & Preview</a>
+                    <a class="navbar-brand" href="#"><span><img src="logo.png" alt="logo" style="width:40px;height:25px;">Code & Preview</span> </a>
+                    
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active">
-                            <a data-toggle="tooltip" data-placement="bottom" title="Mobile" href="" onclick="setWidth('iphone');return false;"><i class="icon-mobile mobile"></i></a>
+                        <li ng-class="{ active: vm.actSize=='mobile'}">
+                            <a data-toggle="tooltip" data-placement="bottom" title="Mobile" href="" ng-click="vm.actSize='mobile';vm.setDeviceSize(vm.settings.mobile,$event)"><i class="icon-mobile mobile"></i></a>
                         </li>
-                        <li>
-                            <a data-toggle="tooltip" data-placement="bottom" title="Tablet" href="" onclick="setWidth('iphone');return false;"><i class="icon-tablet tablet"></i></a>
+                        <li ng-class="{ active: vm.actSize=='tablet'}">
+                            <a data-toggle="tooltip" data-placement="bottom" title="Tablet" href="" ng-click="vm.actSize='tablet';vm.setDeviceSize(vm.settings.tablet,$event)"><i class="icon-tablet tablet"></i></a>
                         </li>
-                        <li>
-                            <a data-toggle="tooltip" data-placement="bottom" title="Laptop" href="" onclick="setWidth('iphone');return false;"><i class="icon-laptop laptop"></i></a>
+                        <li ng-class="{ active: vm.actSize=='laptop'}">
+                            <a data-toggle="tooltip" data-placement="bottom" title="Laptop" href="" ng-click="vm.actSize='laptop';vm.setDeviceSize(vm.settings.laptop,$event)"><i class="icon-laptop laptop"></i></a>
                         </li>
-                        <li>
-                            <a data-toggle="tooltip" data-placement="bottom" title="Desktop" href="" onclick="setWidth('iphone');return false;"><i class="icon-desktop desktop"></i></a>
+                        <li ng-class="{ active: vm.actSize=='desktop'}">
+                            <a data-toggle="tooltip" data-placement="bottom" title="Desktop" href="" ng-click="vm.actSize='desktop';vm.setDeviceSize(vm.settings.desktop,$event)"><i class="icon-desktop desktop"></i></a>
+                        </li>
+                        <li ng-class="{ active: vm.actSize=='fit'}">
+                            <a data-toggle="tooltip" data-placement="bottom" title="Fit" href="" ng-click="vm.actSize='fit';vm.setFitSize();"><i class="icon-resize-full-alt"></i></a>
                         </li>
                         <li>
                             <a data-toggle="tooltip" data-placement="bottom" title="Preview Window" href="" ng-click="vm.previewWindow();"><i class="icon-link-ext newwindow"></i></a>
@@ -171,8 +176,9 @@
                     </div>
                 </div>
             </div>
+
             <br/>
-            <div>
+            <div id="newfileform">
                 <form name="myForm" ng-submit="vm.addNewFile(vm.newFile)" ng-show="vm.addNew" novalidate>
                     <div class="alert alert-danger fade in" ng-show="!myForm.filename.$pristine && myForm.filename.$invalid">
                         <span ng-show="myForm.filename.$error.required">Filename is required.</span>
@@ -181,7 +187,7 @@
                     </div>
                     <div class="form-group" ng-class="{ 'has-error' : myForm.filename.$invalid && !myForm.filename.$pristine }">
                         <input name="filename" placeholder="enter filename" type="text" ng-model="vm.newFile" ng-pattern="vm.fileTypes" ui-validate="{used : 'vm.fileExists($value)' }"
-                            class="form-control input-sm" required>
+                            class="form-control input-sm" required autofocus>
                     </div>
                     <button type="submit" ng-disabled="myForm.$invalid" class="btn btn-primary btn-sm">Save</button>
                     <button type="button" ng-click="vm.addNew = false;" class="btn btn-default btn-sm">Cancel</button>
@@ -190,15 +196,77 @@
                         <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl
                     </div>
                 </form>
-                <a href="" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
+                <a href="" id="aNewFile" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
             </div>
+
+
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="icon-cog"></i>Settings</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span><i class="icon-mobile mobile"></i> <input type="number" style="width:80px;" ng-model="vm.settings.mobile" ng-pattern="/^\d+$/">px</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                       <span><i class="icon-tablet tablet"></i> <input type="number" style="width:80px;" ng-model="vm.settings.tablet" ng-pattern="/^\d+$/">px</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><i class="icon-laptop laptop"></i> <input type="number" style="width:80px;" ng-model="vm.settings.laptop" ng-pattern="/^\d+$/">px</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><i class="icon-desktop desktop"></i> <input type="number" style="width:80px;" ng-model="vm.settings.desktop" ng-pattern="/^\d+$/">px</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><i class="icon-arrows-cw"></i> <input type="number" style="width:70px;" ng-model="vm.settings.preview_delay" ng-pattern="/^\d+$/">ms
+                                         Auto <input type="checkbox" ng-model="vm.settings.auto_refresh"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="icon-user"></i>About</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        - By <a href="http://abhijitdarji.github.io/" target="_blank">Abhijit R Darji</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="ui-layout-center">
             <div class="ui-layout-west">
                 <div class="editor">
                     <textarea ui-codemirror="{ onLoad : vm.codemirrorLoaded }" ui-codemirror-opts="vm.editorOptions" id="htmlTxt" ng-model="vm.dynFile.value"
-                        ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"></textarea>
+                        ng-model-options="vm.modelOptions"></textarea>
                 </div>
             </div>
             <div id="prevCenter" class="ui-layout-center">

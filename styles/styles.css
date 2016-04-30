@@ -5,6 +5,7 @@ body{
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
 .navbar-fixed-top{
     border-bottom: 1px solid darkslategrey;
 }
@@ -17,8 +18,7 @@ body{
     left: 0;
 }
 
-.editor,
-.previewer {
+.editor {
     position: absolute;
     top: 0;
     left: 0;
@@ -26,13 +26,12 @@ body{
     right: 0;
     overflow: hidden;
 }
-
-.previewer .previewer-iframe.iphone {
-    width: 480px;
-}
-
-.previewer .previewer-iframe.desktop {
-    width: 100%;
+.previewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .ui-layout-center,
@@ -94,6 +93,7 @@ body{
   font-size: 12px;
 }
 
+
 /*selected file*/
 .selected{
     background-color: lightslategrey;
@@ -103,4 +103,42 @@ body{
 .selected a{
     color: white;
     text-decoration: none;
+}
+
+/*settings menu*/
+#newfileform{
+    margin-bottom: 80px;
+}
+#accordion {
+    position: fixed;
+    bottom: 0;
+    width: 95%;
+    z-index: 9999 !important;
+}
+.panel{
+    background-color: lightslategray;
+        margin: 0 -5px 0 -5px;
+    padding: 2px 5px 2px 5px;
+}
+.panel-default > .panel-heading{
+    background-color: inherit;
+    border-radius: 0;
+    padding: 5px 5px;
+    color: #fff;
+}
+.panel-title{
+    font-size: 12px;
+}
+.panel-group{
+    margin-bottom: 2px;
+}
+.panel-group .panel{
+    border-radius: 0;
+}
+.panel-group .panel + .panel{
+    margin-top: 0;
+}
+.panel-body{
+    padding: 0;
+    background-color: #fff;
 }

@@ -21,5 +21,13 @@
         .constant('SASS', window.Sass)
         .constant('STYLUS', window.stylus)
         .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown)$/i)
-        .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i);
+        .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i)
+        .constant('SETTINGS', {
+            preview_delay: 500,
+            auto_refresh: true,
+            mobile: 700,
+            tablet: 900,
+            laptop: 1100,
+            desktop: 1400
+        });
 } ());
