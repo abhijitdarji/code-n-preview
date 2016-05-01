@@ -19,7 +19,7 @@ gulp.task('fonts', ['clean-fonts'], getTask('fonts'));
 gulp.task('images', ['clean-images'], getTask('images'));
 
 gulp.task('build', ['optimize', 'images', 'fonts'], getTask('build'));
-gulp.task('optimize',['clean'], getTask('optimize'));
+gulp.task('optimize',['clean-code'], getTask('optimize'));
 gulp.task('publish', ['build'], getTask('publish'));
 
 /**

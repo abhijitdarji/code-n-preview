@@ -33,6 +33,7 @@ module.exports = function (args, gulp, $, config, util) {
 	gulp.task('clean-code', function (done) {
 		var files = [].concat(
 			config.build + 'js/**/*.js',
+			config.build + 'styles/**/*.css',
 			config.build + '**/*.html'
 			);
 		util.clean(files, done);
