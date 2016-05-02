@@ -419,7 +419,7 @@
 
                 vm.fileExists = function ($value) {
                     var exists = vm.files.some(function (file) {
-                        return file.name == $value
+                        return file.name.toLowerCase() == $value.toLowerCase()
                     });
                     return !exists;
                 };
@@ -452,10 +452,18 @@
 
                 vm.deleteFile = function (idx) {
                     console.log(idx);
-                    if ($window.confirm('Are you sure you want to delete this file?')) {
-                        vm.files.splice(idx, 1);
-                        vm.saveFilesToLocal();
+
+                    if (!vm.files[idx].name == 'index.html') {
+                        if ($window.confirm('Are you sure you want to delete this file?')) {
+                            vm.files.splice(idx, 1);
+                            vm.saveFilesToLocal();
+                        }
                     }
+                    else {
+                        alert('index.html cannot be deleted');
+                    }
+
+
                 }
 
                 init();
@@ -545,6 +553,7 @@
 
                     //set the default settings
                     vm.settings = SETTINGS;
+                    vm.actSize = 'fit';
 
                 }
 
