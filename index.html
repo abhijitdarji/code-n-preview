@@ -5,61 +5,11 @@
     <meta charset="UTF-8">
     <title>Code & Preview</title>
 
-    <!-- build:js js/lib.js -->
-    <script type="text/javascript" src="scripts/layout/jquery.js"></script>
-    <script type="text/javascript" src="scripts/layout/jquery-ui.js"></script>
-    <script type="text/javascript" src="scripts/layout/jquery.layout.js"></script>
-    <script type="text/javascript" src="scripts/layout/bootstrap.min.js"></script>
-    <script type="text/javascript" src="scripts/layout/keyboard.min.js"></script>
+    <script src="js/lib.js"></script>
 
-    <script type="text/javascript" src="scripts/compilers/less.config.js"></script>
+    <link rel="stylesheet" href="styles/lib.css">
 
-    <script type="text/javascript" src="scripts/compilers/less.min.js"></script>
-    <script type="text/javascript" src="scripts/compilers/coffee-script.min.js"></script>
-    <script type="text/javascript" src="scripts/compilers/jade.min.js"></script>
-    <script type="text/javascript" src="scripts/compilers/markdown.min.js"></script>
-    <script type="text/javascript" src="scripts/compilers/sass.sync.min.js"></script>
-    <script type="text/javascript" src="scripts/compilers/stylus.min.js"></script>
-
-    <script type="text/javascript" src="scripts/layout/layout.config.js"></script>
-
-    <script src="scripts/editor/codemirror-compressed.js"></script>
-    <script src="scripts/beautify/beautify.js"></script>
-    <script src="scripts/beautify/beautify-css.js"></script>
-    <script src="scripts/beautify/beautify-html.js"></script>
-    <script src="scripts/editor/emmet.js"></script>
-
-    <!--Linting-->
-    <script src="scripts/editor/jshint.js"></script>
-    <script src="scripts/editor/jsonlint.js"></script>
-    <script src="scripts/editor/css-lint.js"></script>
-    <script src="scripts/editor/csslint.js"></script>
-    <script src="scripts/editor/html-lint.js"></script>
-    <script src="scripts/editor/htmlhint.js"></script>
-    <script src="scripts/editor/coffeelint.js"></script>
-    <script src="scripts/editor/coffeescript-lint.js"></script>
-
-
-    <script src="scripts/download/jszip.min.js"></script>
-    <script src="scripts/download/FileSaver.min.js"></script>
-
-    <script src="scripts/angular/angular.min.js"></script>
-    <script src="scripts/angular/validate.min.js"></script>
-    <script src="scripts/angular/ui-codemirror.js"></script>
-    <script src="scripts/angular/angular-local-storage.min.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:css styles/lib.css -->
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="styles/cnpfonts.css">
-    <link rel="stylesheet" type="text/css" href="styles/cnpfonts-animation.css">
-    <link rel="stylesheet" type="text/css" href="styles/editor.css">
-    <link rel="stylesheet" type="text/css" href="styles/layout.css">
-    <!-- endbuild -->
-
-    <!-- build:css styles/app.css -->
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">
-    <!-- endbuild -->
+    <link rel="stylesheet" href="styles/app.css">
 </head>
 
 <body ng-controller="appController as vm">
@@ -284,15 +234,17 @@
 
     </div>
 
-    <!-- build:js js/app.js -->
-    <script type="text/javascript" src="scripts/app.js"></script>
-    <script type="text/javascript" src="scripts/compile.service.js"></script>
-    <script type="text/javascript" src="scripts/compile.directive.js"></script>
-    <script type="text/javascript" src="scripts/app.controller.js"></script>
-    <!-- endbuild -->
+    <script src="js/app.js"></script>
 
-    <!-- inject:analytics -->
-    <!-- endinject -->
+    <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-K6ZFDZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K6ZFDZ');</script>
+<!-- End Google Tag Manager -->
 </body>
 
 </html>

@@ -1,1 +1,0 @@
-var less = less || {}; less.async = true;
