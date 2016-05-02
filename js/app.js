@@ -418,10 +418,15 @@
                 };
 
                 vm.fileExists = function ($value) {
-                    var exists = vm.files.some(function (file) {
-                        return file.name.toLowerCase() == $value.toLowerCase()
-                    });
-                    return !exists;
+                    if (vm.files.length > 0 && $value !== undefined) {
+                        var exists = vm.files.some(function (file) {
+                            return file.name.toLowerCase() == $value.toLowerCase()
+                        });
+                        return !exists;
+                    }
+                    else {
+                        return false;
+                    }
                 };
 
                 vm.addNewFile = function (name, val) {
@@ -451,9 +456,8 @@
                 };
 
                 vm.deleteFile = function (idx) {
-                    console.log(idx);
 
-                    if (!vm.files[idx].name == 'index.html') {
+                    if (vm.files[idx].name != 'index.html') {
                         if ($window.confirm('Are you sure you want to delete this file?')) {
                             vm.files.splice(idx, 1);
                             vm.saveFilesToLocal();
