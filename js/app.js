@@ -418,7 +418,7 @@
                 };
 
                 vm.fileExists = function ($value) {
-                    if (vm.files.length > 0 && $value !== undefined) {
+                    if ($value !== undefined) {
                         var exists = vm.files.some(function (file) {
                             return file.name.toLowerCase() == $value.toLowerCase()
                         });
@@ -537,8 +537,8 @@
 
                     if (localStorageService.isSupported) {
                         var appFiles = localStorageService.get('appFiles');
-
-                        if (appFiles) {
+                        
+                        if (appFiles != null && appFiles.length > 0) {
                             vm.files = appFiles;
                         }
                         else {
