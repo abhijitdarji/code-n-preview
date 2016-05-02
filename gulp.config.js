@@ -15,6 +15,7 @@ module.exports = function () {
         html: client + '**/*.html',
         images: client + 'images/**/*.*',
         index: client + 'index.html',
+        analytics: client + 'scripts/analytics.html',
 
         /**
          * optimized files
