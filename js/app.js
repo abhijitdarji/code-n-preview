@@ -20,6 +20,7 @@
         .constant('MARKDOWN', window.markdown)
         .constant('SASS', window.Sass)
         .constant('STYLUS', window.stylus)
+        .constant('DEXIE', window.Dexie)
         .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown)$/i)
         .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i)
         .constant('SETTINGS', {
@@ -230,6 +231,21 @@
                         }
                         CompileService.compile(compileType, scope.vm.dynFile.value).then(function (result) {
                             out = result;
+
+                            if (scope.vm.dynFile.name.match(/\.(md|markdown)$/i)) {
+
+                                var cont = "<article class='markdown-body'>" + out + '</article>';
+                                var doc = (new DOMParser()).parseFromString(cont, "text/html");
+
+                                var link = doc.createElement('link');
+                                link.href = '/styles/github-markdown.css';
+                                link.rel = 'stylesheet';
+
+                                doc.getElementsByTagName('head')[0].appendChild(link);
+
+                                out = doc.documentElement.outerHTML;
+                            }
+
                             var filename = scope.vm.dynFile.name.substr(0, scope.vm.dynFile.name.length - type.length) + fileExt;
                             insertOrUpdate(filename, out);
                             deferred.resolve('done');
@@ -249,11 +265,15 @@
                     compileSource(scope.vm.dynFile.name)
                         .then(function (result) {
 
+                            //initalize the preview source
+                            var prevsrc = scope.vm.dynFile.name;
+
                             if (scope.vm.dynFile.name.match(/\.(css|js|less|coffee|sass|scss|styl)$/i)) {
 
                                 angular.forEach(scope.vm.files, function (file) {
                                     if (file.name == 'index.html') {
                                         html = file.value
+                                        prevsrc = 'index.html';
                                     }
                                 })
                             }
@@ -262,119 +282,114 @@
                                 angular.forEach(scope.vm.files, function (file) {
                                     if (file.name == scope.vm.dynFile.name.substr(0, scope.vm.dynFile.name.length - scope.vm.dynFile.name.match(/\.(jade|md|markdown)$/i)[0].length) + '.html') {
                                         html = file.value
+                                        prevsrc = scope.vm.dynFile.name.substr(0, scope.vm.dynFile.name.length - scope.vm.dynFile.name.match(/\.(jade|md|markdown)$/i)[0].length) + '.html';
                                     }
                                 })
                             }
 
-                            var iframeHtml = '';
+                            if ('serviceWorker' in navigator) {
 
-                            function get_doctype(document) {
-                                var node = document.doctype;
-                                var doctype =
-                                    "<!DOCTYPE "
-                                    + node.name
-                                    + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '')
-                                    + (!node.publicId && node.systemId ? ' SYSTEM' : '')
-                                    + (node.systemId ? ' "' + node.systemId + '"' : '')
-                                    + '>'
-                                return doctype;
-                            }
+                                ele[0].src = 'run/' + prevsrc;
+                                scope.vm.previewHTML = 'run/' + prevsrc;
 
-                            if (/^<!DOCTYPE/i.test(html)) {
-
-                                var doc = (new DOMParser()).parseFromString(html, "text/html");
-
-                                // or document can be created as below
-                                // doc = window.document.implementation.createHTMLDocument("")
-                                // doc.open()
-                                // doc.write(html)
-                                // if(doc.documentElement) doc.documentElement.innerHTML = html
-
-                                angular.forEach(scope.vm.files, function (file) {
-
-                                    if (file.ext == 'js') {
-
-                                        var el = doc.querySelector("script[src=\"" + file.name + "\"]");
-
-                                        //if not found by same case then try case insentitive search
-                                        if (!el) {
-                                            var superSet = doc.querySelectorAll('script');
-                                            var regex = new RegExp(file.name, "i");
-                                            var found = [].filter.call(superSet, function (x) {
-                                                return regex.test(x.getAttribute('src'));
-                                            })
-                                            if (found.length > 0) el = found[0];
-                                        }
-
-                                        if (el) {
-                                            var newScript = "<!-- " + file.name + " -->"
-                                                + "<script type='text/javascript'> "
-                                                + file.value + "<\/script>";
-
-                                            //angular.element(script).remove();
-                                            //angular.element(doc).find('head').append(newScript);
-                                            angular.element(el).replaceWith(newScript);
-                                        }
-                                    }
-
-                                });
-
-                                angular.forEach(scope.vm.files, function (file) {
-
-                                    if (file.ext == 'css') {
-
-                                        var el = doc.querySelector("link[href=\"" + file.name + "\"]");
-
-                                        //if not found by same case then try case insentitive search
-                                        if (!el) {
-                                            var superSet = doc.querySelectorAll('link');
-                                            var regex = new RegExp(file.name, "i");
-                                            var found = [].filter.call(superSet, function (x) {
-                                                return regex.test(x.getAttribute('href'));
-                                            })
-                                            if (found.length > 0) el = found[0];
-                                        }
-
-                                        if (el) {
-                                            var newLink = "<!-- " + file.name + " -->"
-                                                + "<style type='text/css'> "
-                                                + file.value + "<\/style>";
-
-                                            //angular.element(link).remove();
-                                            //angular.element(doc).find('head').append(newLink);
-                                            angular.element(el).replaceWith(newLink);
-                                        }
-                                    }
-
-                                });
-
-                                iframeHtml = HTML_BEAUTIFY(get_doctype(doc) + doc.documentElement.outerHTML);
-
-                            }
-                            else if (scope.vm.dynFile.name.match(/\.(md|markdown)$/i)) {
-
-                                var cont = "<article class='markdown-body'>" + html + '</article>';
-                                var doc = (new DOMParser()).parseFromString(cont, "text/html");
-
-                                var link = doc.createElement('link');
-                                link.href = 'styles/github-markdown.css';
-                                link.rel = 'stylesheet';
-
-                                doc.getElementsByTagName('head')[0].appendChild(link);
-
-                                iframeHtml = doc.documentElement.outerHTML;
                             }
                             else {
-                                iframeHtml = html;
-                            }
+                                var iframeHtml = '';
 
-                            scope.vm.previewHTML = iframeHtml;
-                            var preview = ele[0].contentDocument || ele[0].contentWindow.document;
-                            if (ele[0].contentWindow.angular) delete ele[0].contentWindow.angular;
-                            preview.open();
-                            preview.write(iframeHtml);
-                            preview.close();
+                                function get_doctype(document) {
+                                    var node = document.doctype;
+                                    var doctype =
+                                        "<!DOCTYPE "
+                                        + node.name
+                                        + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '')
+                                        + (!node.publicId && node.systemId ? ' SYSTEM' : '')
+                                        + (node.systemId ? ' "' + node.systemId + '"' : '')
+                                        + '>'
+                                    return doctype;
+                                }
 
+                                if (/^<!DOCTYPE/i.test(html)) {
+
+                                    var doc = (new DOMParser()).parseFromString(html, "text/html");
+
+                                    // or document can be created as below
+                                    // doc = window.document.implementation.createHTMLDocument("")
+                                    // doc.open()
+                                    // doc.write(html)
+                                    // if(doc.documentElement) doc.documentElement.innerHTML = html
+
+                                    angular.forEach(scope.vm.files, function (file) {
+
+                                        if (file.ext == 'js') {
+
+                                            var el = doc.querySelector("script[src=\"" + file.name + "\"]");
+
+                                            //if not found by same case then try case insentitive search
+                                            if (!el) {
+                                                var superSet = doc.querySelectorAll('script');
+                                                var regex = new RegExp(file.name, "i");
+                                                var found = [].filter.call(superSet, function (x) {
+                                                    return regex.test(x.getAttribute('src'));
+                                                })
+                                                if (found.length > 0) el = found[0];
+                                            }
+
+                                            if (el) {
+                                                var newScript = "<!-- " + file.name + " -->"
+                                                    + "<script type='text/javascript'> "
+                                                    + file.value + "<\/script>";
+
+                                                //angular.element(script).remove();
+                                                //angular.element(doc).find('head').append(newScript);
+                                                angular.element(el).replaceWith(newScript);
+                                            }
+                                        }
+
+                                    });
+
+                                    angular.forEach(scope.vm.files, function (file) {
+
+                                        if (file.ext == 'css') {
+
+                                            var el = doc.querySelector("link[href=\"" + file.name + "\"]");
+
+                                            //if not found by same case then try case insentitive search
+                                            if (!el) {
+                                                var superSet = doc.querySelectorAll('link');
+                                                var regex = new RegExp(file.name, "i");
+                                                var found = [].filter.call(superSet, function (x) {
+                                                    return regex.test(x.getAttribute('href'));
+                                                })
+                                                if (found.length > 0) el = found[0];
+                                            }
+
+                                            if (el) {
+                                                var newLink = "<!-- " + file.name + " -->"
+                                                    + "<style type='text/css'> "
+                                                    + file.value + "<\/style>";
+
+                                                //angular.element(link).remove();
+                                                //angular.element(doc).find('head').append(newLink);
+                                                angular.element(el).replaceWith(newLink);
+                                            }
+                                        }
+
+                                    });
+
+                                    iframeHtml = HTML_BEAUTIFY(get_doctype(doc) + doc.documentElement.outerHTML);
+
+                                }
+                                else {
+                                    iframeHtml = html;
+                                }
+
+                                scope.vm.previewHTML = iframeHtml;
+                                var preview = ele[0].contentDocument || ele[0].contentWindow.document;
+                                if (ele[0].contentWindow.angular) delete ele[0].contentWindow.angular;
+                                preview.open();
+                                preview.write(iframeHtml);
+                                preview.close();
+                            } //end sw not available
 
                         });
                 }
@@ -404,7 +419,8 @@
             'SAVEAS',
             'FILE_TYPES',
             'SETTINGS',
-            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS) {
+            'DEXIE',
+            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE) {
                 var vm = this;
                 vm.dynFile = {};
 
@@ -415,6 +431,57 @@
 
                 vm.saveFilesToLocal = function () {
                     if (localStorageService.isSupported) localStorageService.set('appFiles', vm.files);
+
+                    if ('serviceWorker' in navigator) {
+                        var dbname = 'cnpDB';
+
+                        DEXIE.exists(dbname)
+                            .then(function (exists) {
+                                if (exists) {
+                                    console.log("Database exists");
+                                    var db = new DEXIE(dbname);
+
+                                    db.version(1)
+                                        .stores({
+                                            files: 'name, value, ext'
+                                        });
+
+                                    //copy files to db
+                                    angular.forEach(vm.files, function (file) {
+
+                                        db.files
+                                            .put({
+                                                name: file.name,
+                                                value: file.value,
+                                                ext: file.ext
+                                            });
+                                    });
+
+                                }
+                                else {
+                                    var db = new DEXIE(dbname);
+                                    // Define a schema
+                                    db.version(1)
+                                        .stores({
+                                            files: 'name, value, ext'
+                                        });
+
+                                    //copy files to db
+                                    angular.forEach(vm.files, function (file) {
+
+                                        db.files
+                                            .add({
+                                                name: file.name,
+                                                value: file.value,
+                                                ext: file.ext
+                                            });
+                                    })
+                                }
+                            }).catch(function (error) {
+                                console.error("Oops, an error occurred when trying to check database existance");
+                                console.log(error);
+                            });
+                    }
                 };
 
                 vm.fileExists = function ($value) {
@@ -537,7 +604,7 @@
 
                     if (localStorageService.isSupported) {
                         var appFiles = localStorageService.get('appFiles');
-                        
+
                         if (appFiles != null && appFiles.length > 0) {
                             vm.files = appFiles;
                         }
@@ -739,12 +806,19 @@
 
                 vm.previewWindow = function () {
 
-                    var win = window.open("about:blank", "Preview", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=780, height=500");
-                    var preview = win.contentDocument || win.document;
-                    if (win.angular) delete win.angular;
-                    preview.open();
-                    preview.write(vm.previewHTML);
-                    preview.close();
+                    if ('serviceWorker' in navigator) {
+
+                        var win = window.open(vm.previewHTML, "Preview", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=780, height=500");
+
+                    }
+                    else {
+                        var win = window.open("about:blank", "Preview", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=780, height=500");
+                        var preview = win.contentDocument || win.document;
+                        if (win.angular) delete win.angular;
+                        preview.open();
+                        preview.write(vm.previewHTML);
+                        preview.close();
+                    }
                 };
 
                 vm.setDeviceSize = function (size, e) {
