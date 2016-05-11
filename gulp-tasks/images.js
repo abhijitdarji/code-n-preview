@@ -6,6 +6,9 @@ module.exports = function (args, gulp, $, config, util) {
 		 */
 		util.log('Compressing and copying images');
 
+		gulp.src('./favicon.ico')
+			.pipe(gulp.dest(config.build));
+			
 		return gulp
 			.src(config.images)
 			.pipe($.imagemin({ optimizationLevel: 4 }))
