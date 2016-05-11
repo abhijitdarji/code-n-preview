@@ -1,7 +1,7 @@
 # Code & Preview
 > In browser code editing and preview. Inspired from [Plunker](https://plnkr.co/)
 
-## [Demo](http://abhijitdarji.github.io/code-n-preview)
+## [Demo](https://abhijitdarji.github.io/code-n-preview)
 
 ## Libraries
 
@@ -21,6 +21,9 @@
 * [Markdown](https://github.com/evilstreak/markdown-js)
 * [SASS](https://github.com/medialize/sass.js)
 * [Stylus](http://stylus-lang.com)
+
+##### Run
+* [Dexie](https://github.com/dfahlander/Dexie.js/wiki/Download)
 
 ##### Layout
 * [Bootstrap](http://getbootstrap.com)
@@ -77,4 +80,5 @@ Global:
 
 * Mobile, Tablet, Laptop, Desktop modes
 * Separate preview window
+* Service workers for chrome (works only when served via https)
 
