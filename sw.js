@@ -6,7 +6,7 @@ self.addEventListener('fetch', function (event) {
     var url = new URL(event.request.url);
 
     if (/\/run\//.test(url.pathname)) {
-        
+
         var parts = url.pathname.split('/');
         var database = 'cnpDB';
         var store = 'files';
@@ -63,10 +63,10 @@ self.addEventListener('fetch', function (event) {
                     //db.close();
                 };
             })));
-        
+
     }
     else {
-       event.respondWith(
+        event.respondWith(
             fetch(event.request)
         );
     }
