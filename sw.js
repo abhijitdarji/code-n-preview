@@ -10,7 +10,7 @@ self.addEventListener('fetch', function (event) {
         var parts = url.pathname.split('/');
         var database = 'cnpDB';
         var store = 'files';
-        var key = parts[2];
+        var key = parts[parts.length - 1];
 
         if (!dbs.has(database)) {
             dbs.set(database, new Promise((resolve, reject) => {
