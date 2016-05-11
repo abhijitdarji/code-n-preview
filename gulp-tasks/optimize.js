@@ -15,6 +15,9 @@ module.exports = function (args, gulp, $, config, util) {
 
 		gulp.src('./styles/github-markdown.css')
 			.pipe(gulp.dest(config.build + 'styles/'));
+		
+		gulp.src('./run/**')
+			.pipe(gulp.dest(config.build + 'run/'));
 
 		return gulp
 			.src(config.index)

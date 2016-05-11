@@ -31,7 +31,6 @@
                         DEXIE.exists(dbname)
                             .then(function (exists) {
                                 if (exists) {
-                                    console.log("Database exists");
                                     var db = new DEXIE(dbname);
 
                                     db.version(1)
