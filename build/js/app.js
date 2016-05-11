@@ -188,6 +188,17 @@
         function link(scope, ele, attrs) {
             scope.$watch(attrs.compile, function (html) {
 
+                function get_doctype(document) {
+                    var node = document.doctype;
+                    var doctype =
+                        "<!DOCTYPE "
+                        + node.name
+                        + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '')
+                        + (!node.publicId && node.systemId ? ' SYSTEM' : '')
+                        + (node.systemId ? ' "' + node.systemId + '"' : '')
+                        + '>'
+                    return doctype;
+                }
 
                 function insertOrUpdate(filename, value) {
                     var exists = scope.vm.files.some(function (file) {
@@ -295,18 +306,6 @@
                             }
                             else {
                                 var iframeHtml = '';
-
-                                function get_doctype(document) {
-                                    var node = document.doctype;
-                                    var doctype =
-                                        "<!DOCTYPE "
-                                        + node.name
-                                        + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '')
-                                        + (!node.publicId && node.systemId ? ' SYSTEM' : '')
-                                        + (node.systemId ? ' "' + node.systemId + '"' : '')
-                                        + '>'
-                                    return doctype;
-                                }
 
                                 if (/^<!DOCTYPE/i.test(html)) {
 
