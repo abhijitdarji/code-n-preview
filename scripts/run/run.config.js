@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     if ('serviceWorker' in navigator) {
         var scope = 'run/';
-        navigator.serviceWorker.register('./run/sw.js', { scope: scope })
+        navigator.serviceWorker.register('./sw.js', { scope: scope })
             .then(function (r) {
                 console.log('sw.js registered');
             })
