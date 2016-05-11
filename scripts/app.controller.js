@@ -12,7 +12,8 @@
             'SAVEAS',
             'FILE_TYPES',
             'SETTINGS',
-            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS) {
+            'DEXIE',
+            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE) {
                 var vm = this;
                 vm.dynFile = {};
 
@@ -23,6 +24,57 @@
 
                 vm.saveFilesToLocal = function () {
                     if (localStorageService.isSupported) localStorageService.set('appFiles', vm.files);
+
+                    if ('serviceWorker' in navigator) {
+                        var dbname = 'cnpDB';
+
+                        DEXIE.exists(dbname)
+                            .then(function (exists) {
+                                if (exists) {
+                                    console.log("Database exists");
+                                    var db = new DEXIE(dbname);
+
+                                    db.version(1)
+                                        .stores({
+                                            files: 'name, value, ext'
+                                        });
+
+                                    //copy files to db
+                                    angular.forEach(vm.files, function (file) {
+
+                                        db.files
+                                            .put({
+                                                name: file.name,
+                                                value: file.value,
+                                                ext: file.ext
+                                            });
+                                    });
+
+                                }
+                                else {
+                                    var db = new DEXIE(dbname);
+                                    // Define a schema
+                                    db.version(1)
+                                        .stores({
+                                            files: 'name, value, ext'
+                                        });
+
+                                    //copy files to db
+                                    angular.forEach(vm.files, function (file) {
+
+                                        db.files
+                                            .add({
+                                                name: file.name,
+                                                value: file.value,
+                                                ext: file.ext
+                                            });
+                                    })
+                                }
+                            }).catch(function (error) {
+                                console.error("Oops, an error occurred when trying to check database existance");
+                                console.log(error);
+                            });
+                    }
                 };
 
                 vm.fileExists = function ($value) {
@@ -145,7 +197,7 @@
 
                     if (localStorageService.isSupported) {
                         var appFiles = localStorageService.get('appFiles');
-                        
+
                         if (appFiles != null && appFiles.length > 0) {
                             vm.files = appFiles;
                         }
@@ -347,12 +399,19 @@
 
                 vm.previewWindow = function () {
 
-                    var win = window.open("about:blank", "Preview", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=780, height=500");
-                    var preview = win.contentDocument || win.document;
-                    if (win.angular) delete win.angular;
-                    preview.open();
-                    preview.write(vm.previewHTML);
-                    preview.close();
+                    if ('serviceWorker' in navigator) {
+
+                        var win = window.open(vm.previewHTML, "Preview", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=780, height=500");
+
+                    }
+                    else {
+                        var win = window.open("about:blank", "Preview", "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=780, height=500");
+                        var preview = win.contentDocument || win.document;
+                        if (win.angular) delete win.angular;
+                        preview.open();
+                        preview.write(vm.previewHTML);
+                        preview.close();
+                    }
                 };
 
                 vm.setDeviceSize = function (size, e) {

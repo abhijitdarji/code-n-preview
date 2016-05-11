@@ -20,6 +20,7 @@
         .constant('MARKDOWN', window.markdown)
         .constant('SASS', window.Sass)
         .constant('STYLUS', window.stylus)
+        .constant('DEXIE', window.Dexie)
         .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown)$/i)
         .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i)
         .constant('SETTINGS', {

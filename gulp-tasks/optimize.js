@@ -13,6 +13,8 @@ module.exports = function (args, gulp, $, config, util) {
 		var jsAppFilter = $.filter('**/' + config.optimized.app);
 		var jslibFilter = $.filter('**/' + config.optimized.lib);
 
+		gulp.src('./styles/github-markdown.css')
+			.pipe(gulp.dest(config.build + 'styles/'));
 
 		return gulp
 			.src(config.index)
