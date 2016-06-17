@@ -58,7 +58,8 @@
                         'MD': '.html',
                         'SASS': '.css',
                         'SCSS': '.css',
-                        'STYL': '.css'
+                        'STYL': '.css',
+                        'TS': '.js'
                     }
                     if (name.match(COMPILE_TYPES)) {
                         var type = name.match(COMPILE_TYPES)[0],
@@ -109,7 +110,7 @@
                             //initalize the preview source
                             var prevsrc = scope.vm.dynFile.name;
 
-                            if (scope.vm.dynFile.name.match(/\.(css|js|less|coffee|sass|scss|styl)$/i)) {
+                            if (scope.vm.dynFile.name.match(/\.(css|js|less|coffee|sass|scss|styl|ts)$/i)) {
 
                                 angular.forEach(scope.vm.files, function (file) {
                                     if (file.name == 'index.html') {

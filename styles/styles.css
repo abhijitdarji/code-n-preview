@@ -67,6 +67,9 @@ body{
 .styl{
     color: lawngreen;
 }
+.ts{
+    color: blue;
+}
 .coffee{
     color: sandybrown;
 }

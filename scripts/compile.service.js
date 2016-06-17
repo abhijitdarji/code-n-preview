@@ -5,8 +5,8 @@
         .module('myapp')
         .factory('CompileService', CompileService);
 
-    CompileService.$inject = ['$q', 'LESS', 'COFFEESCRIPT', 'JADE', 'MARKDOWN', 'SASS', 'STYLUS'];
-    function CompileService($q, LESS, COFFEESCRIPT, JADE, MARKDOWN, SASS, STYLUS) {
+    CompileService.$inject = ['$q', 'LESS', 'COFFEESCRIPT', 'JADE', 'MARKDOWN', 'SASS', 'STYLUS', 'TYPESCRIPT'];
+    function CompileService($q, LESS, COFFEESCRIPT, JADE, MARKDOWN, SASS, STYLUS, TYPESCRIPT) {
         var service = {
             compile: compile,
             less: less,
@@ -59,6 +59,10 @@
                     break;
                 case 'STYL':
                     result = stylus(input);
+                    deferred.resolve(result);
+                    break;
+                case 'TS':
+                    result = typescript(input);
                     deferred.resolve(result);
                     break;
             }
@@ -130,6 +134,12 @@
                 }
 
             });
+            return out;
+        }
+
+        function typescript(input) {
+            var out;
+            out = TYPESCRIPT.transpile(input);
             return out;
         }
     }

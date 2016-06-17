@@ -21,6 +21,7 @@
 * [Markdown](https://github.com/evilstreak/markdown-js)
 * [SASS](https://github.com/medialize/sass.js)
 * [Stylus](http://stylus-lang.com)
+* [Typescript](https://www.typescriptlang.org/)
 
 ##### Run
 * [Dexie](https://github.com/dfahlander/Dexie.js/wiki/Download)
@@ -51,7 +52,7 @@ Generated using [Fontello](http://fontello.com)
 ##### General
 
 * Download project files as zip
-* File types supported: HTML, CSS, JS, LESS, SASS, SCSS, JADE, MD, MARKDOWN, COFFEE, STYL
+* File types supported: HTML, CSS, JS, LESS, SASS, SCSS, JADE, MD, MARKDOWN, COFFEE, STYL, TS
 
 ##### Editor
 

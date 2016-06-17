@@ -339,6 +339,10 @@
                             vm.editor.setOption('mode', 'text/x-styl');
                             vm.editor.setOption('lint', false);
                             break;
+                        case 'ts':
+                            vm.editor.setOption('mode', 'text/typescript');
+                            vm.editor.setOption('lint', false);
+                            break;
                     }
 
                     vm.dynFile = file;
@@ -360,7 +364,7 @@
 
                     if (mode == "text/html") {
                         output = HTML_BEAUTIFY(source);
-                    } else if (mode == "text/javascript") {
+                    } else if (mode == "text/javascript" || mode == "text/typescript") {
                         output = JS_BEAUTIFY(source);
                     } else if (mode == "text/css") {
                         output = CSS_BEAUTIFY(source);

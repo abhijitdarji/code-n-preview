@@ -20,9 +20,10 @@
         .constant('MARKDOWN', window.markdown)
         .constant('SASS', window.Sass)
         .constant('STYLUS', window.stylus)
+        .constant('TYPESCRIPT', ts)
         .constant('DEXIE', window.Dexie)
-        .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown)$/i)
-        .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown)$/i)
+        .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown|ts)$/i)
+        .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown|ts)$/i)
         .constant('SETTINGS', {
             preview_delay: 500,
             auto_refresh: true,
@@ -39,8 +40,8 @@
         .module('myapp')
         .factory('CompileService', CompileService);
 
-    CompileService.$inject = ['$q', 'LESS', 'COFFEESCRIPT', 'JADE', 'MARKDOWN', 'SASS', 'STYLUS'];
-    function CompileService($q, LESS, COFFEESCRIPT, JADE, MARKDOWN, SASS, STYLUS) {
+    CompileService.$inject = ['$q', 'LESS', 'COFFEESCRIPT', 'JADE', 'MARKDOWN', 'SASS', 'STYLUS', 'TYPESCRIPT'];
+    function CompileService($q, LESS, COFFEESCRIPT, JADE, MARKDOWN, SASS, STYLUS, TYPESCRIPT) {
         var service = {
             compile: compile,
             less: less,
@@ -93,6 +94,10 @@
                     break;
                 case 'STYL':
                     result = stylus(input);
+                    deferred.resolve(result);
+                    break;
+                case 'TS':
+                    result = typescript(input);
                     deferred.resolve(result);
                     break;
             }
@@ -166,6 +171,12 @@
             });
             return out;
         }
+
+        function typescript(input) {
+            var out;
+            out = TYPESCRIPT.transpile(input);
+            return out;
+        }
     }
 })();
 (function () {
@@ -228,7 +239,8 @@
                         'MD': '.html',
                         'SASS': '.css',
                         'SCSS': '.css',
-                        'STYL': '.css'
+                        'STYL': '.css',
+                        'TS': '.js'
                     }
                     if (name.match(COMPILE_TYPES)) {
                         var type = name.match(COMPILE_TYPES)[0],
@@ -279,7 +291,7 @@
                             //initalize the preview source
                             var prevsrc = scope.vm.dynFile.name;
 
-                            if (scope.vm.dynFile.name.match(/\.(css|js|less|coffee|sass|scss|styl)$/i)) {
+                            if (scope.vm.dynFile.name.match(/\.(css|js|less|coffee|sass|scss|styl|ts)$/i)) {
 
                                 angular.forEach(scope.vm.files, function (file) {
                                     if (file.name == 'index.html') {
@@ -745,6 +757,10 @@
                             vm.editor.setOption('mode', 'text/x-styl');
                             vm.editor.setOption('lint', false);
                             break;
+                        case 'ts':
+                            vm.editor.setOption('mode', 'text/typescript');
+                            vm.editor.setOption('lint', false);
+                            break;
                     }
 
                     vm.dynFile = file;
@@ -766,7 +782,7 @@
 
                     if (mode == "text/html") {
                         output = HTML_BEAUTIFY(source);
-                    } else if (mode == "text/javascript") {
+                    } else if (mode == "text/javascript" || mode == "text/typescript") {
                         output = JS_BEAUTIFY(source);
                     } else if (mode == "text/css") {
                         output = CSS_BEAUTIFY(source);
