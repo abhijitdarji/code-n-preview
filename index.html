@@ -135,6 +135,12 @@
                         <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
                     </div>
                 </div>
+                <div ng-switch-when="ts" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
+                    <i class="ts icon-prog-js01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
+                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
+                    </div>
+                </div>
             </div>
 
             <br/>
@@ -153,7 +159,7 @@
                     <button type="button" ng-click="vm.addNew = false;" class="btn btn-default btn-sm">Cancel</button>
                     <br/> <br/>
                     <div class="alert alert-info">
-                        <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl
+                        <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl, ts
                     </div>
                 </form>
                 <a href="" id="aNewFile" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
