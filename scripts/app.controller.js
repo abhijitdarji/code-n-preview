@@ -13,9 +13,13 @@
             'FILE_TYPES',
             'SETTINGS',
             'DEXIE',
-            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE) {
+            'DataService',
+            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE, DataService) {
                 var vm = this;
                 vm.dynFile = {};
+                vm.curWrk = '';
+                vm.workspaces = [];
+                vm.snippets = {};
 
                 vm.files = [];
                 vm.fileTypes = FILE_TYPES;
@@ -217,6 +221,11 @@
                     //set the default settings
                     vm.settings = SETTINGS;
                     vm.actSize = 'fit';
+
+                    //set the snippets menu
+                    DataService.getSnippets().then(function (result) {
+                        vm.snippetDef = result.data.def;
+                    })
 
                 }
 
