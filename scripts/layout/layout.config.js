@@ -35,6 +35,8 @@ $(document).ready(function () {
     });
 
     //SNIPPETS MEGA MENU
+
+function setMegaMenu(){
     var $menu = $(".dropdown-menu.mega");
 
     // Hook up events to be fired on menu row activation.
@@ -91,5 +93,9 @@ $(document).ready(function () {
         $(".popover").css("display", "none");
         $("a.maintainHover").removeClass("maintainHover");
     });
+}
+
+//dirty fix for angular ngrepeat to finish
+setTimeout(setMegaMenu,2000);
 
 });

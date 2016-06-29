@@ -225,7 +225,10 @@
                     //set the snippets menu
                     DataService.getSnippets().then(function (result) {
                         vm.snippetDef = result.data.def;
-                    })
+
+                        //set the snippets on emmet
+                        EMMET_CODEMIRROR.emmet.loadUserData(result.data);
+                    });
 
                 }
 
@@ -433,6 +436,11 @@
                 vm.setFitSize = function () {
                     angular.element('#preview').css({ width: '100%' });
                 };
+
+                vm.setEditorSnippet = function(cmd){
+                    vm.editor.replaceSelection(cmd,vm.editor.getCursor());
+                    vm.editor.execCommand('emmet.expand_abbreviation');
+                }
 
             }])
 

@@ -7,14 +7,34 @@
                 "imgurl": "",
                 "snippets": [
                     {
-                        "command": "ard",
-                        "label": "ARD Comment",
-                        "description": "Simple ard text comment"
+                        "group": "General",
+                        "snip": [
+                            {
+                                "command": "ard",
+                                "label": "ARD Comment",
+                                "description": "Simple ard text comment"
+                            },
+                            {
+                                "command": "ardm",
+                                "label": "ARD 3 ListItems",
+                                "description": "Simple Unordered list with 3 list items"
+                            }
+                        ]
                     },
                     {
-                        "command": "ardm",
-                        "label": "ARD 3 ListItems",
-                        "description": "Simple Unordered list with 3 list items"
+                        "group": "Other",
+                        "snip": [
+                            {
+                                "command": "ard",
+                                "label": "ARD Comment",
+                                "description": "Simple ard text comment"
+                            },
+                            {
+                                "command": "ardm",
+                                "label": "ARD 3 ListItems",
+                                "description": "Simple Unordered list with 3 list items"
+                            }
+                        ]
                     }
                 ]
             },
@@ -24,9 +44,14 @@
                 "imgurl": "",
                 "snippets": [
                     {
-                        "command": "bsnavbar",
-                        "label": "Navbar Default",
-                        "description": "Bootstrap navbar default"
+                        "group": "Navbar",
+                        "snip": [
+                            {
+                                "command": "bsnavbar",
+                                "label": "Navbar Default",
+                                "description": "Bootstrap navbar default"
+                            }
+                        ]
                     }
                 ]
             }

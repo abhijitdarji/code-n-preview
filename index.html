@@ -135,17 +135,10 @@
                                     <div class="popover-content">
                                         <ul class="row">
                                             <li class="col-sm-3">
-                                                <ul>
-                                                    <li class="dropdown-header">Glyphicons</li>
-                                                    <li><a href="#">Available glyphs</a></li>
-                                                    <li class="disabled"><a href="#">How to use</a></li>
-                                                    <li><a href="#">Examples</a></li>
+                                                <ul ng-repeat="grp in cat.snippets">
+                                                    <li class="dropdown-header">{{grp.group}}</li>
+                                                    <li ng-repeat="snip in grp.snip"><a href="#" ng-click="vm.setEditorSnippet(snip.command)">{{snip.label}}</a></li>
                                                     <li class="divider"></li>
-                                                    <li class="dropdown-header">Dropdowns</li>
-                                                    <li><a href="#">Example</a></li>
-                                                    <li><a href="#">Aligninment options</a></li>
-                                                    <li><a href="#">Headers</a></li>
-                                                    <li><a href="#">Disabled menu items</a></li>
                                                 </ul>
                                             </li>
                                         </ul>
