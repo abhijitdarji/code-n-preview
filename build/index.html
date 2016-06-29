@@ -8,7 +8,7 @@
     <title>Code & Preview</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
+
 
     <script src="js/lib.js"></script>
 
@@ -21,45 +21,102 @@
 
     <header>
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                        aria-controls="navbar">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><span><img src="images/logo.png" alt="logo" style="width:40px;height:25px;">Code & Preview</span> </a>
+                <a class="navbar-brand" href="#"><span><img src="images/logo.png" alt="logo" style="width:40px;height:25px;">Code & Preview</span> </a>
 
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li ng-class="{ active: vm.actSize=='mobile'}">
-                            <a data-toggle="tooltip" data-placement="bottom" title="Mobile" href="" ng-click="vm.actSize='mobile';vm.setDeviceSize(vm.settings.mobile,$event)"><i class="icon-mobile mobile"></i></a>
-                        </li>
-                        <li ng-class="{ active: vm.actSize=='tablet'}">
-                            <a data-toggle="tooltip" data-placement="bottom" title="Tablet" href="" ng-click="vm.actSize='tablet';vm.setDeviceSize(vm.settings.tablet,$event)"><i class="icon-tablet tablet"></i></a>
-                        </li>
-                        <li ng-class="{ active: vm.actSize=='laptop'}">
-                            <a data-toggle="tooltip" data-placement="bottom" title="Laptop" href="" ng-click="vm.actSize='laptop';vm.setDeviceSize(vm.settings.laptop,$event)"><i class="icon-laptop laptop"></i></a>
-                        </li>
-                        <li ng-class="{ active: vm.actSize=='desktop'}">
-                            <a data-toggle="tooltip" data-placement="bottom" title="Desktop" href="" ng-click="vm.actSize='desktop';vm.setDeviceSize(vm.settings.desktop,$event)"><i class="icon-desktop desktop"></i></a>
-                        </li>
-                        <li ng-class="{ active: vm.actSize=='fit'}">
-                            <a data-toggle="tooltip" data-placement="bottom" title="Fit" href="" ng-click="vm.actSize='fit';vm.setFitSize();"><i class="icon-resize-full-alt"></i></a>
-                        </li>
-                        <li>
-                            <a data-toggle="tooltip" data-placement="bottom" title="Preview Window" href="" ng-click="vm.previewWindow();"><i class="icon-link-ext newwindow"></i></a>
-                        </li>
-                        <li>
-                            <a data-toggle="tooltip" data-placement="bottom" title="Download" href="" ng-click="vm.downloadZip();"><i class="icon-download download"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <!--/.nav-collapse -->
             </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Default<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Workspace</li>
+                            <li><a href="#">Default</a></li>
+                            <li><a href="#">Other</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Create New</li>
+                            <li><a href="#">Blank</a></li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">From Template</a>
+                                <ul class="dropdown-menu">
+                                    <li><a tabindex="-1" href="#">Second level</a></li>
+                                    <li><a href="#">Second level</a></li>
+                                    <li><a href="#">Second level</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libraries<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">JS</li>
+                            <li><a href="#">AngularJS</a></li>
+                            <li><a href="#">ReactJS</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">CSS</li>
+                            <li><a href="#">Bootstrap</a></li>
+                            <li><a href="#">Font Awesome</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-large">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Snippets<span class="caret"></span></a>
+                        <ul class="dropdown-menu mega dropdown-menu-large" role="menu">
+                            <li data-submenu-id="submenu-{{cat.short}}" ng-repeat="cat in vm.snippetDef.categories">
+                                <a href="#">{{cat.type}}</a>
+                                <div id="submenu-{{cat.short}}" class="popover">
+                                    <h3 class="popover-title">{{cat.type}}</h3>
+                                    <div class="popover-content">
+                                        <ul class="row">
+                                            <li class="col-sm-3">
+                                                <ul ng-repeat="grp in cat.snippets">
+                                                    <li class="dropdown-header">{{grp.group}}</li>
+                                                    <li ng-repeat="snip in grp.snip"><a href="#" ng-click="vm.setEditorSnippet(snip.command)">{{snip.label}}</a></li>
+                                                    <li class="divider"></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-class="{ active: vm.actSize=='mobile'}">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Mobile" href="" ng-click="vm.actSize='mobile';vm.setDeviceSize(vm.settings.mobile,$event)"><i class="icon-mobile mobile"></i></a>
+                    </li>
+                    <li ng-class="{ active: vm.actSize=='tablet'}">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Tablet" href="" ng-click="vm.actSize='tablet';vm.setDeviceSize(vm.settings.tablet,$event)"><i class="icon-tablet tablet"></i></a>
+                    </li>
+                    <li ng-class="{ active: vm.actSize=='laptop'}">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Laptop" href="" ng-click="vm.actSize='laptop';vm.setDeviceSize(vm.settings.laptop,$event)"><i class="icon-laptop laptop"></i></a>
+                    </li>
+                    <li ng-class="{ active: vm.actSize=='desktop'}">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Desktop" href="" ng-click="vm.actSize='desktop';vm.setDeviceSize(vm.settings.desktop,$event)"><i class="icon-desktop desktop"></i></a>
+                    </li>
+                    <li ng-class="{ active: vm.actSize=='fit'}">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Fit" href="" ng-click="vm.actSize='fit';vm.setFitSize();"><i class="icon-resize-full-alt"></i></a>
+                    </li>
+                    <li>
+                        <a data-toggle="tooltip" data-placement="bottom" title="Preview Window" href="" ng-click="vm.previewWindow();"><i class="icon-link-ext newwindow"></i></a>
+                    </li>
+                    <li style="padding-right:15px;">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Download" href="" ng-click="vm.downloadZip();"><i class="icon-download download"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+
         </nav>
     </header>
 

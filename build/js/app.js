@@ -38,6 +38,38 @@
 
     angular
         .module('myapp')
+        .factory('DataService', DataService);
+
+    DataService.$inject = ['$http'];
+    function DataService($http) {
+        var service = {
+            getSnippets: getSnippets,
+            getTemplates: getTemplates,
+            getLibraries: getLibraries
+        };
+
+        return service;
+
+        ////////////////
+
+        function getSnippets() {
+            return $http.get('data/snippets.json');
+        }
+
+        function getTemplates() {
+            return $http.get('data/templates.json');
+        }
+
+        function getLibraries() {
+            return $http.get('data/libraries.json');
+        }
+    }
+})();
+(function () {
+    'use strict';
+
+    angular
+        .module('myapp')
         .factory('CompileService', CompileService);
 
     CompileService.$inject = ['$q', 'LESS', 'COFFEESCRIPT', 'JADE', 'MARKDOWN', 'SASS', 'STYLUS', 'TYPESCRIPT'];
@@ -431,9 +463,13 @@
             'FILE_TYPES',
             'SETTINGS',
             'DEXIE',
-            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE) {
+            'DataService',
+            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE, DataService) {
                 var vm = this;
                 vm.dynFile = {};
+                vm.curWrk = '';
+                vm.workspaces = [];
+                vm.snippets = {};
 
                 vm.files = [];
                 vm.fileTypes = FILE_TYPES;
@@ -635,6 +671,14 @@
                     //set the default settings
                     vm.settings = SETTINGS;
                     vm.actSize = 'fit';
+
+                    //set the snippets menu
+                    DataService.getSnippets().then(function (result) {
+                        vm.snippetDef = result.data.def;
+
+                        //set the snippets on emmet
+                        EMMET_CODEMIRROR.emmet.loadUserData(result.data);
+                    });
 
                 }
 
@@ -842,6 +886,11 @@
                 vm.setFitSize = function () {
                     angular.element('#preview').css({ width: '100%' });
                 };
+
+                vm.setEditorSnippet = function(cmd){
+                    vm.editor.replaceRange(cmd,vm.editor.getCursor());
+                    vm.editor.execCommand('emmet.expand_abbreviation');
+                }
 
             }])
 

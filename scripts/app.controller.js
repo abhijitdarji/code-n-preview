@@ -16,10 +16,12 @@
             'DataService',
             function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE, DataService) {
                 var vm = this;
+                vm.Math = $window.Math;
                 vm.dynFile = {};
                 vm.curWrk = '';
                 vm.workspaces = [];
                 vm.snippets = {};
+                vm.libraries = {};
 
                 vm.files = [];
                 vm.fileTypes = FILE_TYPES;
@@ -230,6 +232,11 @@
                         EMMET_CODEMIRROR.emmet.loadUserData(result.data);
                     });
 
+                    //set the libraries menu
+                    DataService.getLibraries().then(function (result) {
+                        vm.libraries = result.data.categories;
+                    });
+
                 }
 
 
@@ -437,9 +444,59 @@
                     angular.element('#preview').css({ width: '100%' });
                 };
 
-                vm.setEditorSnippet = function(cmd){
-                    vm.editor.replaceSelection(cmd,vm.editor.getCursor());
+                vm.setEditorSnippet = function (cmd) {
+                    vm.editor.replaceRange(cmd, vm.editor.getCursor());
                     vm.editor.execCommand('emmet.expand_abbreviation');
+                }
+
+                vm.addLibrary = function (ver,lib) {
+
+                    function clearPreviousInsert(doc, data){
+                        $('[data-cnp='+ data + '-d],[data-cnp='+ data + '-m],[data-cnp='+ data + '-y]', doc).remove();
+                    }
+
+                    if(vm.dynFile.ext == 'html'){
+                        var doc = (new DOMParser()).parseFromString(vm.dynFile.value, "text/html");
+
+                        clearPreviousInsert(doc,lib);
+
+                        //dependencies
+                        angular.forEach(ver.dependencies, function (src) {
+                            var sr = doc.createElement('script');
+                            sr.src = src;
+                            sr.type = 'text/javascript';
+                            sr.setAttribute('data-cnp', lib + '-d');
+
+                            doc.getElementsByTagName('head')[0].appendChild(sr);
+                        });
+
+                        //actual script files
+                        angular.forEach(ver.scripts, function (src) {
+                            var sr = doc.createElement('script');
+                            sr.src = src;
+                            sr.type = 'text/javascript';
+                            sr.setAttribute('data-cnp', lib + '-m');
+
+                            doc.getElementsByTagName('head')[0].appendChild(sr);
+                        });
+
+                        //styles 
+                        angular.forEach(ver.styles, function (url) {
+                            var link = doc.createElement('link');
+                            link.href = url;
+                            link.rel = 'stylesheet';
+                            link.setAttribute('data-cnp', lib + '-y');
+
+                            doc.getElementsByTagName('head')[0].appendChild(link);
+                        });
+
+                        vm.dynFile.value = HTML_BEAUTIFY(doc.documentElement.outerHTML,{
+                            "max_preserve_newlines": 1
+                        });
+                    }
+                    else{
+                        alert('please load html document to add library');
+                    }
                 }
 
             }])

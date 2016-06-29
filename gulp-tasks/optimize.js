@@ -19,6 +19,9 @@ module.exports = function (args, gulp, $, config, util) {
 		gulp.src('./sw.js')
 			.pipe(gulp.dest(config.build));
 
+		gulp.src('./data/**/*')
+			.pipe(gulp.dest(config.build + 'data/'));
+
 		return gulp
 			.src(config.index)
 			.pipe($.plumber())

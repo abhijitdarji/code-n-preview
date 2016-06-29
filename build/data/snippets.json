@@ -1,0 +1,106 @@
+{
+    "def": {
+        "categories": [
+            {
+                "type": "HTML5",
+                "short": "html",
+                "imgurl": "",
+                "snippets": [
+                    {
+                        "group": "General",
+                        "snip": [
+                            {
+                                "command": "ard",
+                                "label": "ARD Comment",
+                                "description": "Simple ard text comment"
+                            },
+                            {
+                                "command": "ardm",
+                                "label": "ARD 3 ListItems",
+                                "description": "Simple Unordered list with 3 list items"
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Other",
+                        "snip": [
+                            {
+                                "command": "ard",
+                                "label": "ARD Comment",
+                                "description": "Simple ard text comment"
+                            },
+                            {
+                                "command": "ardm",
+                                "label": "ARD 3 ListItems",
+                                "description": "Simple Unordered list with 3 list items"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "Bootstrap",
+                "short": "boot",
+                "imgurl": "",
+                "snippets": [
+                    {
+                        "group": "Navbar",
+                        "snip": [
+                            {
+                                "command": "bsnavbar",
+                                "label": "Navbar Default",
+                                "description": "Bootstrap navbar default"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "snippets": {
+        "html": {
+            "snippets": {
+                "ard": "<!-- ard -->"
+            },
+            "abbreviations": {
+                "ardm": "ul>li.list{item $$}*3",
+                "ardhead": "header>h1>a[href=index.html]{This is a landing page}^p.lead{This is a description of this page}",
+                "bsnavbar": ".navbar>ul>li*4>a[href=#]{link $}",
+                "bscarousel": ".carousel.slide#carousel-example>(ol.carousel-indicators>li[data-target=#carousel-example data-slide-to=$]*3)(.carousel-inner>.item*3>img[src=http://lorempixel.com/1170/300 alt=Image]+.carousel-caption{This is a caption $})(a[href=carousel-example data-slide=prev].left.carousel-control>span.icon-prev^a[href=carousel-example data-slide=next].right.carousel-control>span.icon-next)",
+                "bssec:features": "section#features>h3{Product Features}+p{Here's why you should really buy this product.}+hr+(.row>.col-lg-4>.media>a[href=#].pull-left>img[src=http://lorempixel.com/64/64 alt=Image]^.media-body>h4.media-heading{Feature name}+p>lorem10)*4",
+                "bssec:order": "section#order>.well.well-lg>h3.text-center{Order now!}+p.text-center{Receive a great bonus}+p.text-center>a[href=#].btn.btn-primary{Place order &rarr;}",
+                "bssec:test": "section#testimonials>.panel>.panel-heading{A few words from our customers.}+.row>(.col-lg-6>blockquote>lorem10+small{John from}>cite{Source})*2"
+            }
+        },
+        "css": {
+            "snippets": {
+                "mza": "margin: 0 auto;"
+            }
+        },
+        "javascript": {
+            "snippets": {
+                "forard": "for (var ${class} = 0; i < ${id}.length; ${class}++) {\n\t|}"
+            }
+        },
+        "jade": {
+            "filters": "jade",
+            "extends": "html",
+            "profile": "xml"
+        },
+        "scss": {
+            "extends": "css"
+        },
+        "sass": {
+            "extends": "css"
+        },
+        "less": {
+            "extends": "css"
+        },
+        "stylus": {
+            "extends": "css"
+        },
+        "styl": {
+            "extends": "stylus"
+        }
+    }
+}

@@ -115,14 +115,14 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Libraries<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li class="dropdown-header">JS</li>
-                            <li><a href="#">AngularJS</a></li>
-                            <li><a href="#">ReactJS</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">CSS</li>
-                            <li><a href="#">Bootstrap</a></li>
-                            <li><a href="#">Font Awesome</a></li>
+                            <li class="dropdown-header" ng-repeat-start="typs in vm.libraries">{{typs.type}}</li>
+                            <li class="dropdown-submenu" ng-repeat="lib in typs.libs">
+                                <a href="#">{{lib.name}}</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" ng-repeat="ver in lib.versions" ng-click="vm.addLibrary(ver,lib.short)">{{ver.ver}}</a></li>
+                                </ul>
+                            </li>
+                            <li role="separator" class="divider" ng-if="!$last" ng-repeat-end></li>
                         </ul>
                     </li>
                     <li class="dropdown dropdown-large">
@@ -134,11 +134,11 @@
                                     <h3 class="popover-title">{{cat.type}}</h3>
                                     <div class="popover-content">
                                         <ul class="row">
-                                            <li class="col-sm-3">
-                                                <ul ng-repeat="grp in cat.snippets">
+                                            <li class="col-xs-3" ng-repeat="grp in cat.snippets">
+                                                <ul>
                                                     <li class="dropdown-header">{{grp.group}}</li>
                                                     <li ng-repeat="snip in grp.snip"><a href="#" ng-click="vm.setEditorSnippet(snip.command)">{{snip.label}}</a></li>
-                                                    <li class="divider"></li>
+                                                    <li class="divider" ng-if="cat.snippets.length>4 && $index<=4*(vm.Math.floor(cat.snippets.length/4))-1"></li>
                                                 </ul>
                                             </li>
                                         </ul>
