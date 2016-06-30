@@ -22,14 +22,49 @@
                 vm.workspaces = [];
                 vm.snippets = {};
                 vm.libraries = {};
+                vm.templates = {};
 
                 vm.files = [];
                 vm.fileTypes = FILE_TYPES;
                 vm.previewHTML = '';
                 vm.settings = {};
 
+
+                function addTemplateFiles(wrk, id) {
+                    vm.files = [];
+
+                    //set the libraries menu
+                    DataService.getTemplates().then(function (result) {
+                        vm.templates = result.data.templates;
+
+                        var temp;
+                        angular.forEach(vm.templates, function (tp) {
+                            if (tp.id == id) temp = tp;
+                        })
+
+                        angular.forEach(temp.files, function (file) {
+                            vm.addNewFile(file.name, file.value);
+                        })
+
+                        wrk.files = vm.files;
+                    });
+                }
+
+                vm.addWorkspace = function (name, type) {
+                    var newWrk = {};
+                    newWrk.name = name;
+                    addTemplateFiles(newWrk, type);
+                    vm.workspaces.push(newWrk);
+                    vm.selectWorkspace(vm.workspaces.length -1);
+                }
+
+                vm.selectWorkspace = function (id) {
+                    vm.curWrk = vm.workspaces[id];
+                    vm.files = vm.curWrk.files;
+                }
+
                 vm.saveFilesToLocal = function () {
-                    if (localStorageService.isSupported) localStorageService.set('appFiles', vm.files);
+                    if (localStorageService.isSupported) localStorageService.set('appWrkSp', vm.workspaces);
 
                     if ('serviceWorker' in navigator) {
                         var dbname = 'cnpDB';
@@ -83,7 +118,7 @@
                 };
 
                 vm.fileExists = function ($value) {
-                    if ($value !== undefined) {
+                    if ($value !== undefined && typeof(vm.files) == 'object' ) {
                         var exists = vm.files.some(function (file) {
                             return file.name.toLowerCase() == $value.toLowerCase()
                         });
@@ -201,24 +236,22 @@
                     var strLess = "@base: green; .done-true { text-decoration: line-through;color: @base}";
 
                     if (localStorageService.isSupported) {
-                        var appFiles = localStorageService.get('appFiles');
+                        var appWrkSp = localStorageService.get('appWrkSp');
 
-                        if (appFiles != null && appFiles.length > 0) {
-                            vm.files = appFiles;
+                        if (appWrkSp != null && appWrkSp.files.length > 0) {
+                            vm.workspaces = appWrkSp;
                         }
                         else {
-                            vm.addNewFile('index.html', strVar);
-                            vm.addNewFile('scripts.js', strJS);
-                            vm.addNewFile('styles.less', strLess);
+                            vm.addWorkspace('Default', 0);
 
                             vm.saveFilesToLocal();
                         }
                     }
                     else {
-                        vm.addNewFile('index.html', strVar);
-                        vm.addNewFile('scripts.js', strJS);
-                        vm.addNewFile('styles.less', strLess);
+                        vm.addWorkspace('Default', 0);
                     }
+
+                    vm.selectWorkspace(0);
 
                     //set the default settings
                     vm.settings = SETTINGS;
@@ -449,16 +482,16 @@
                     vm.editor.execCommand('emmet.expand_abbreviation');
                 }
 
-                vm.addLibrary = function (ver,lib) {
+                vm.addLibrary = function (ver, lib) {
 
-                    function clearPreviousInsert(doc, data){
-                        $('[data-cnp='+ data + '-d],[data-cnp='+ data + '-m],[data-cnp='+ data + '-y]', doc).remove();
+                    function clearPreviousInsert(doc, data) {
+                        $('[data-cnp=' + data + '-d],[data-cnp=' + data + '-m],[data-cnp=' + data + '-y]', doc).remove();
                     }
 
-                    if(vm.dynFile.ext == 'html'){
+                    if (vm.dynFile.ext == 'html') {
                         var doc = (new DOMParser()).parseFromString(vm.dynFile.value, "text/html");
 
-                        clearPreviousInsert(doc,lib);
+                        clearPreviousInsert(doc, lib);
 
                         //dependencies
                         angular.forEach(ver.dependencies, function (src) {
@@ -490,11 +523,11 @@
                             doc.getElementsByTagName('head')[0].appendChild(link);
                         });
 
-                        vm.dynFile.value = HTML_BEAUTIFY(doc.documentElement.outerHTML,{
+                        vm.dynFile.value = HTML_BEAUTIFY(doc.documentElement.outerHTML, {
                             "max_preserve_newlines": 1
                         });
                     }
-                    else{
+                    else {
                         alert('please load html document to add library');
                     }
                 }

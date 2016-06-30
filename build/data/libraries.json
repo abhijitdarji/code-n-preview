@@ -1,104 +1,110 @@
-[
-    {
-        "description": "HTML enhanced for web apps! By Google",
-        "homepage": "http://code.angularjs.org",
-        "name": "angular.js",
-        "tags": [],
-        "versions": [
-            {
-                "ver": "0.10.0",
-                "dependencies": [],
-                "styles": [],
-                "scripts": [
-                    "https://code.angularjs.org/0.10.0/angular.js"
-                    //"https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"
-                    //"https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"
-                ]
-            },
-            {
-                "ver": "1.5.0",
-                "dependencies": [],
-                "styles": [
-                    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
-                    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
-                ],
-                "scripts": [
-                    "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js",
-                    "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-animate.min.js",
-                    "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"
-                ]
-            },
-            {
-                "ver": "2.0.0-beta.15",
-                "dependencies": [
-                    "https://code.angularjs.org/2.0.0-beta.15/angular2-polyfills.js",
-                    "https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.0/es6-shim.min.js",
-                    "https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.26/system-polyfills.js",
-                    "https://npmcdn.com/angular2/es6/dev/src/testing/shims_for_IE.js",
-                    "https://code.angularjs.org/tools/system.js",
-                    "https://code.angularjs.org/tools/typescript.js"
-                ],
-                "styles": [],
-                "scripts": [
-                    "https://code.angularjs.org/2.0.0-beta.15/angular2-polyfills.js",
-                    "https://code.angularjs.org/2.0.0-beta.15/Rx.js",
-                    "https://code.angularjs.org/2.0.0-beta.15/angular2.dev.js"
-                ]
-            }
-        ]
-    },
-    {
-        "description": "Sleek, intuitive, and powerful framework for faster and easier web development.",
-        "homepage": "https://raw.github.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-0.4.0.js",
-        "name": "bootstrap",
-        "tags": [],
-        "versions": [
-            {
-                "ver": "2.3.2",
-                "dependencies": [
-                    "https://code.jquery.com/jquery-1.9.1.js"
-                ],
-                "styles": [],
-                "scripts": [
-                    "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
-                ]
-            },
-            {
-                "ver": "3.3.5",
-                "dependencies": [],
-                "styles": [
-                    "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
-                    "//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css",
-                    "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
-                ],
-                "scripts": [
-                    "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
-                ]
-            }
-        ]
-    },
-    {
-        "description": "jQuery is a fast and concise JavaScript Library that simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development. jQuery is designed to change the way that you write JavaScript.",
-        "homepage": "http://jquery.com/",
-        "name": "jquery",
-        "tags": [],
-        "versions": [
-            {
-                "ver": "1.9.1",
-                "dependencies": [],
-                "styles": [],
-                "scripts": [
-                    "https://code.jquery.com/jquery-1.9.1.js"
-                ]
-            },
-            {
-                "ver": "2.0.0",
-                "dependencies": [],
-                "styles": [],
-                "scripts": [
-                    "//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-                ]
-            }
-        ]
-    }
-]
+{
+    "categories": [
+        {
+            "type": "JS",
+            "libs": [
+                {
+                    "name": "AngularJS",
+                    "short": "angularjs",
+                    "versions": [
+                        {
+                            "ver": "0.10.0",
+                            "dependencies": [],
+                            "styles": [],
+                            "scripts": [
+                                "https://code.angularjs.org/0.10.0/angular.js"
+                            ]
+                        },
+                        {
+                            "ver": "1.5.0",
+                            "dependencies": [],
+                            "styles": [
+                                "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
+                                "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+                            ],
+                            "scripts": [
+                                "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js",
+                                "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-animate.min.js",
+                                "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"
+                            ]
+                        },
+                        {
+                            "ver": "2.0.0-beta.15",
+                            "dependencies": [
+                                "https://code.angularjs.org/2.0.0-beta.15/angular2-polyfills.js",
+                                "https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.0/es6-shim.min.js",
+                                "https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.26/system-polyfills.js",
+                                "https://npmcdn.com/angular2/es6/dev/src/testing/shims_for_IE.js",
+                                "https://code.angularjs.org/tools/system.js",
+                                "https://code.angularjs.org/tools/typescript.js"
+                            ],
+                            "styles": [],
+                            "scripts": [
+                                "https://code.angularjs.org/2.0.0-beta.15/angular2-polyfills.js",
+                                "https://code.angularjs.org/2.0.0-beta.15/Rx.js",
+                                "https://code.angularjs.org/2.0.0-beta.15/angular2.dev.js"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "jQuery",
+                    "short": "jquery",
+                    "versions": [
+                        {
+                            "ver": "1.9.1",
+                            "dependencies": [],
+                            "styles": [],
+                            "scripts": [
+                                "https://code.jquery.com/jquery-1.9.1.js"
+                            ]
+                        },
+                        {
+                            "ver": "2.0.0",
+                            "dependencies": [],
+                            "styles": [],
+                            "scripts": [
+                                "//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "CSS",
+            "libs": [
+                {
+                    "name": "Bootstrap",
+                    "short": "bootstrap",
+                    "versions": [
+                        {
+                            "ver": "2.3.2",
+                            "dependencies": [
+                                "https://code.jquery.com/jquery-1.9.1.js"
+                            ],
+                            "styles": [],
+                            "scripts": [
+                                "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
+                            ]
+                        },
+                        {
+                            "ver": "3.3.5",
+                            "dependencies": [
+                                 "https://code.jquery.com/jquery-1.9.1.js"
+                            ],
+                            "styles": [
+                                "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
+                                "//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cosmo/bootstrap.min.css",
+                                "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+                            ],
+                            "scripts": [
+                                "//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
