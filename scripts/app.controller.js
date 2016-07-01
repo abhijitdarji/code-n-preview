@@ -18,7 +18,7 @@
                 var vm = this;
                 vm.Math = $window.Math;
                 vm.dynFile = {};
-                vm.curWrk = '';
+                vm.curWrk = {};
                 vm.workspaces = [];
                 vm.snippets = {};
                 vm.libraries = {};
@@ -31,39 +31,60 @@
 
 
                 function addTemplateFiles(wrk, id) {
-                    vm.files = [];
 
                     //set the libraries menu
-                    DataService.getTemplates().then(function (result) {
-                        vm.templates = result.data.templates;
+                    var temp;
+                    angular.forEach(vm.templates, function (tp) {
+                        if (tp.id == id) temp = tp;
+                    })
 
-                        var temp;
-                        angular.forEach(vm.templates, function (tp) {
-                            if (tp.id == id) temp = tp;
-                        })
+                    vm.files = [];
+                    angular.forEach(temp.files, function (file) {
 
-                        angular.forEach(temp.files, function (file) {
-                            vm.addNewFile(file.name, file.value);
-                        })
+                        if(angular.isDefined(file.templateUrl)){
+                            DataService.getTemplateFromUrl(file.name,file.templateUrl).then(function(result){
+                                vm.addNewFile(file.name, result.data);
+                            })
+                        }
+                        else{
+                            vm.addNewFile(file.name, file.template);
+                        }
+                        
+                    })
 
-                        wrk.files = vm.files;
-                    });
+                    wrk.files = vm.files;
                 }
 
                 vm.addWorkspace = function (name, type) {
-                    var newWrk = {};
-                    newWrk.name = name;
-                    addTemplateFiles(newWrk, type);
-                    vm.workspaces.push(newWrk);
-                    vm.selectWorkspace(vm.workspaces.length -1);
+
+                    if(name == null) {
+                        name = prompt("Please enter workspace name", "HTML Sample");
+                    }
+
+                    if(name != null){
+                        var newWrk = {};
+                        newWrk.name = name;
+                        addTemplateFiles(newWrk, type);
+                        vm.workspaces.push(newWrk);
+                        vm.selectWorkspace(vm.workspaces.length -1);
+                    }
                 }
 
                 vm.selectWorkspace = function (id) {
                     vm.curWrk = vm.workspaces[id];
                     vm.files = vm.curWrk.files;
+                    vm.dynFile = {};
+                    vm.previewHTML = '';
                 }
 
                 vm.saveFilesToLocal = function () {
+                    console.log('save');
+                    vm.curWrk.files = vm.files;
+
+                    angular.forEach(vm.workspaces, function (wrk) {
+                            if(vm.curWrk.name == wrk.name) wrk.files = vm.curWrk.files;
+                    });
+
                     if (localStorageService.isSupported) localStorageService.set('appWrkSp', vm.workspaces);
 
                     if ('serviceWorker' in navigator) {
@@ -117,8 +138,9 @@
                     }
                 };
 
-                vm.fileExists = function ($value) {
-                    if ($value !== undefined && typeof(vm.files) == 'object' ) {
+                vm.fileNotExists = function ($value) {
+                    if ($value !== undefined) {
+                        if(vm.files === undefined) return true;
                         var exists = vm.files.some(function (file) {
                             return file.name.toLowerCase() == $value.toLowerCase()
                         });
@@ -131,7 +153,7 @@
 
                 vm.addNewFile = function (name, val) {
 
-                    if (!vm.fileExists(name)) {
+                    if (!vm.fileNotExists(name)) {
                         alert('File cannot be added. File with this name already exists.');
                         return;
                     };
@@ -173,86 +195,7 @@
                 init();
 
                 function init() {
-                    var strVar = "";
-                    strVar += "<!doctype html>";
-                    strVar += "<html ng-app=\"todoApp\">";
-                    strVar += "<head>";
-                    strVar += "    <script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/angularjs\/1.5.5\/angular.min.js\"><\/script>";
-                    strVar += "    <script src=\"scripts.js\"><\/script>";
-                    strVar += "    <link rel=\"stylesheet\" href=\"styles.css\">";
-                    strVar += "<\/head>";
-                    strVar += "";
-                    strVar += "<body>";
-                    strVar += "    <h2>Todo<\/h2>";
-                    strVar += "    <div ng-controller=\"TodoListController as todoList\">";
-                    strVar += "        <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining<\/span> [ <a href=\"\" ng-click=\"todoList.archive()\">archive<\/a> ]";
-                    strVar += "        <ul class=\"unstyled\">";
-                    strVar += "            <li ng-repeat=\"todo in todoList.todos\">";
-                    strVar += "                <label class=\"checkbox\">";
-                    strVar += "            <input type=\"checkbox\" ng-model=\"todo.done\">";
-                    strVar += "            <span class=\"done-{{todo.done}}\">{{todo.text}}<\/span>";
-                    strVar += "          <\/label>";
-                    strVar += "            <\/li>";
-                    strVar += "        <\/ul>";
-                    strVar += "        <form ng-submit=\"todoList.addTodo()\">";
-                    strVar += "            <input type=\"text\" ng-model=\"todoList.todoText\" size=\"30\" placeholder=\"add new todo here\">";
-                    strVar += "            <input class=\"btn-primary\" type=\"submit\" value=\"add\">";
-                    strVar += "        <\/form>";
-                    strVar += "    <\/div>";
-                    strVar += "<\/body>";
-                    strVar += "";
-                    strVar += "<\/html>";
-
-                    var strJS = "";
-                    strJS += "angular.module('todoApp', [])";
-                    strJS += "  .controller('TodoListController', function() {";
-                    strJS += "    var todoList = this;";
-                    strJS += "    todoList.todos = [";
-                    strJS += "      {text:'learn angular', done:true},";
-                    strJS += "      {text:'build an angular app', done:false}];";
-                    strJS += " ";
-                    strJS += "    todoList.addTodo = function() {";
-                    strJS += "      todoList.todos.push({text:todoList.todoText, done:false});";
-                    strJS += "      todoList.todoText = '';";
-                    strJS += "    };";
-                    strJS += " ";
-                    strJS += "    todoList.remaining = function() {";
-                    strJS += "      var count = 0;";
-                    strJS += "      angular.forEach(todoList.todos, function(todo) {";
-                    strJS += "        count += todo.done ? 0 : 1;";
-                    strJS += "      });";
-                    strJS += "      return count;";
-                    strJS += "    };";
-                    strJS += " ";
-                    strJS += "    todoList.archive = function() {";
-                    strJS += "      var oldTodos = todoList.todos;";
-                    strJS += "      todoList.todos = [];";
-                    strJS += "      angular.forEach(oldTodos, function(todo) {";
-                    strJS += "        if (!todo.done) todoList.todos.push(todo);";
-                    strJS += "      });";
-                    strJS += "    };";
-                    strJS += "  });";
-
-                    var strLess = "@base: green; .done-true { text-decoration: line-through;color: @base}";
-
-                    if (localStorageService.isSupported) {
-                        var appWrkSp = localStorageService.get('appWrkSp');
-
-                        if (appWrkSp != null && appWrkSp.files.length > 0) {
-                            vm.workspaces = appWrkSp;
-                        }
-                        else {
-                            vm.addWorkspace('Default', 0);
-
-                            vm.saveFilesToLocal();
-                        }
-                    }
-                    else {
-                        vm.addWorkspace('Default', 0);
-                    }
-
-                    vm.selectWorkspace(0);
-
+                   
                     //set the default settings
                     vm.settings = SETTINGS;
                     vm.actSize = 'fit';
@@ -269,6 +212,28 @@
                     DataService.getLibraries().then(function (result) {
                         vm.libraries = result.data.categories;
                     });
+
+                     DataService.getTemplates().then(function (result) {
+                        vm.templates = result.data.templates;
+
+                        if (localStorageService.isSupported) {
+                            var appWrkSp = localStorageService.get('appWrkSp');
+
+                            if (appWrkSp != null && appWrkSp.length > 0) {
+                                vm.workspaces = appWrkSp;
+                                vm.selectWorkspace(0);
+                            }
+                            else {
+                                vm.addWorkspace('Default', 0);
+
+                                vm.saveFilesToLocal();
+                            }
+                        }
+                        else {
+                            vm.addWorkspace('Default', 0);
+                        }
+                     });
+
 
                 }
 

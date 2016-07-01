@@ -6,15 +6,15 @@
             "files": [
                 {
                     "name": "index.html",
-                    "value": "<!-- your html code here -->"
+                    "template": "<!-- your html code here -->"
                 },
                 {
                     "name": "scripts.js",
-                    "value": "//your javascript code here"
+                    "template": "//your javascript code here"
                 },
                 {
                     "name": "styles.less",
-                    "value": "//your styles here"
+                    "template": "//your styles here"
                 }
             ]
         },
@@ -24,15 +24,15 @@
             "files": [
                 {
                     "name": "index.html",
-                    "value": "<!-- your html code here -->"
+                    "templateUrl": "templates/angulartodomvc/"
                 },
                 {
-                    "name": "scripts.js",
-                    "value": "//your javascript code here"
+                    "name": "todo.js",
+                    "templateUrl": "templates/angulartodomvc/"
                 },
                 {
-                    "name": "styles.less",
-                    "value": "//your styles here"
+                    "name": "todo.css",
+                    "templateUrl": "templates/angulartodomvc/"
                 }
             ]
         },
@@ -42,15 +42,15 @@
             "files": [
                 {
                     "name": "index.html",
-                    "value": "<!-- your html code here -->"
+                    "template": "<!-- your html code here -->"
                 },
                 {
                     "name": "scripts.js",
-                    "value": "//your javascript code here"
+                    "template": "//your javascript code here"
                 },
                 {
                     "name": "styles.less",
-                    "value": "//your styles here"
+                    "template": "//your styles here"
                 }
             ]
         },
@@ -60,15 +60,15 @@
             "files": [
                 {
                     "name": "index.html",
-                    "value": "<!-- your html code here -->"
+                    "template": "<!-- your html code here -->"
                 },
                 {
                     "name": "scripts.js",
-                    "value": "//your javascript code here"
+                    "template": "//your javascript code here"
                 },
                 {
                     "name": "styles.less",
-                    "value": "//your styles here"
+                    "template": "//your styles here"
                 }
             ]
         }

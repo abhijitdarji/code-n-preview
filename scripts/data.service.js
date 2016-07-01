@@ -10,7 +10,8 @@
         var service = {
             getSnippets: getSnippets,
             getTemplates: getTemplates,
-            getLibraries: getLibraries
+            getLibraries: getLibraries,
+            getTemplateFromUrl: getTemplateFromUrl
         };
 
         return service;
@@ -27,6 +28,11 @@
 
         function getLibraries() {
             return $http.get('data/libraries.json');
+        }
+
+        function getTemplateFromUrl(name, url) {
+            var fetchURL = "data/" + url + name;
+            return $http.get(fetchURL);
         }
     }
 })();
