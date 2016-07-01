@@ -2,6 +2,7 @@
 > In browser code editing and preview. Inspired from [Plunker](https://plnkr.co/)
 
 ## [Demo](https://abhijitdarji.github.io/code-n-preview)
+<img src="https://cloud.githubusercontent.com/assets/14065663/16533257/7015b4bc-3fa5-11e6-9552-0b90930ec2d8.png" alt="Screenshot" width="600" height="500">
 
 ## Libraries
 
@@ -9,6 +10,7 @@
 * [AngularJS](http://angularjs.org)
 * [Angular Local Storage](https://github.com/grevory/angular-local-storage)
 * [Angular UI CodeMirror](https://github.com/angular-ui/ui-codemirror)
+* [Angular UI Validate](https://github.com/angular-ui/ui-validate)
 
 ##### Editor
 * [CodeMirror](http://codemirror.net/doc/compress.html)
@@ -31,6 +33,7 @@
 * [jQuery](http://jquery.com)
 * [jQuery UI](http://jqueryui.com)
 * [jQuery Layout](http://layout.jquery-dev.com)
+* [jQuery-menu-aim](https://github.com/kamens/jQuery-menu-aim)
 * [KeyboardJS](https://github.com/RobertWHurst/KeyboardJS)
 * [Github Markdown CSS](https://github.com/sindresorhus/github-markdown-css)
 
@@ -50,7 +53,13 @@ Generated using [Fontello](http://fontello.com)
 ## Features
 
 ##### General
+><img src="https://cloud.githubusercontent.com/assets/14065663/16533273/8831e8b8-3fa5-11e6-8200-bc1ad761021e.png" alt="workspace" width="100" height="150">  <img src="https://cloud.githubusercontent.com/assets/14065663/16533292/a2b28792-3fa5-11e6-9614-d88a219f86b0.png" alt="libraries" width="100" height="150">  <img src="https://cloud.githubusercontent.com/assets/14065663/16533297/b652dab8-3fa5-11e6-8485-7ce184ce1175.png" alt="libraries" width="400" height="150">
 
+* Work on multiple projects using workspaces 
+* Create new workspace from templates (HTML5, AngularJS, Bootstrap)
+* Add Libraries to HTML from CDN with all dependencies 
+* Use snippets to add code blocks to html/js/css file 
+* Snippets uses emmet snippets and abbreviations which means it can also be added in the editor without using menu
 * Download project files as zip
 * File types supported: HTML, CSS, JS, LESS, SASS, SCSS, JADE, MD, MARKDOWN, COFFEE, STYL, TS
 
@@ -61,6 +70,7 @@ Generated using [Fontello](http://fontello.com)
 * Code Linting ([HTML](http://htmlhint.com), [JS](http://jshint.com), [CSS](http://csslint.net), [COFFEE](http://www.coffeelint.org))
 * Full Screen Editing
 * Live Compilation
+* Snippets
 
 ###### Keyboard shortcuts
 Editor:

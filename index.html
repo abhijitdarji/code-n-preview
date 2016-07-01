@@ -96,7 +96,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{vm.curWrk.name}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-header">Workspace</li>
-                            <li><a href="#" ng-repeat="wrk in vm.workspaces" ng-click="vm.selectWorkspace($index)">{{wrk.name}}</a></li>
+                            <li>
+                                <a href="#" style="display:inline-block;clear:none;width:80%;" ng-repeat-start="wrk in vm.workspaces" ng-click="vm.selectWorkspace($index)">{{wrk.name}}</a>
+                                <span style="float:right;padding-right:8px;" ng-repeat-end ng-click="vm.deleteWorkspace($index)"><i class="delete icon-cancel"></i></span>
+                            </li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Create New</li>
                             <li><a href="#" ng-click="vm.addWorkspace(null,0)">{{vm.templates[0].name}}</a></li>
@@ -178,75 +181,10 @@
 
         <div ng-cloak id="menu" class="ui-layout-west">
 
-            <div ng-repeat="file in vm.files" ng-switch on="file.ext">
-                <div ng-class="{selected: file == vm.dynFile}" ng-switch-when="html" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="html icon-html5-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="js" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="js icon-prog-js02"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="css" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="css icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="less" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="less icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="sass" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="sass icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="scss" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="scss icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="coffee" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="coffee icon-prog-coffeescr"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="md" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="md icon-markdown"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="markdown" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="markdown icon-markdown"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="jade" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="jade icon-html5-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="styl" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="styl icon-css3-01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
-                    <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
-                        <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
-                    </div>
-                </div>
-                <div ng-switch-when="ts" ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="ts icon-prog-js01"></i><a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
+            <div ng-repeat="file in vm.files">
+                <div ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
+                    <i class="{{file.ext}} ng-class:{'html':'icon-html5-01','js':'icon-prog-js02','css':'icon-css3-01','less':'icon-css3-01','sass':'icon-css3-01','scss':'icon-css3-01','coffee':'icon-prog-coffeescr','md':'icon-markdown','markdown':'icon-markdown','jade':'icon-html5-01','styl':'icon-css3-01','ts':'icon-prog-js01'}[file.ext]"></i>
+                    <a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
                     <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
                         <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
                     </div>

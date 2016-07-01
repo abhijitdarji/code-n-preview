@@ -41,15 +41,15 @@
                     vm.files = [];
                     angular.forEach(temp.files, function (file) {
 
-                        if(angular.isDefined(file.templateUrl)){
-                            DataService.getTemplateFromUrl(file.name,file.templateUrl).then(function(result){
+                        if (angular.isDefined(file.templateUrl)) {
+                            DataService.getTemplateFromUrl(file.name, file.templateUrl).then(function (result) {
                                 vm.addNewFile(file.name, result.data);
                             })
                         }
-                        else{
+                        else {
                             vm.addNewFile(file.name, file.template);
                         }
-                        
+
                     })
 
                     wrk.files = vm.files;
@@ -57,16 +57,16 @@
 
                 vm.addWorkspace = function (name, type) {
 
-                    if(name == null) {
+                    if (name == null) {
                         name = prompt("Please enter workspace name", "HTML Sample");
                     }
 
-                    if(name != null){
+                    if (name != null) {
                         var newWrk = {};
                         newWrk.name = name;
                         addTemplateFiles(newWrk, type);
                         vm.workspaces.push(newWrk);
-                        vm.selectWorkspace(vm.workspaces.length -1);
+                        vm.selectWorkspace(vm.workspaces.length - 1);
                     }
                 }
 
@@ -75,14 +75,19 @@
                     vm.files = vm.curWrk.files;
                     vm.dynFile = {};
                     vm.previewHTML = '';
+                    vm.saveFilesToLocal();
+                    angular.forEach(vm.files, function (file) {
+                        if (file.name == 'index.html') {
+                            vm.setEditorValue(file);
+                        }
+                    });
                 }
 
                 vm.saveFilesToLocal = function () {
-                    console.log('save');
                     vm.curWrk.files = vm.files;
 
                     angular.forEach(vm.workspaces, function (wrk) {
-                            if(vm.curWrk.name == wrk.name) wrk.files = vm.curWrk.files;
+                        if (vm.curWrk.name == wrk.name) wrk.files = vm.curWrk.files;
                     });
 
                     if (localStorageService.isSupported) localStorageService.set('appWrkSp', vm.workspaces);
@@ -140,7 +145,7 @@
 
                 vm.fileNotExists = function ($value) {
                     if ($value !== undefined) {
-                        if(vm.files === undefined) return true;
+                        if (vm.files === undefined) return true;
                         var exists = vm.files.some(function (file) {
                             return file.name.toLowerCase() == $value.toLowerCase()
                         });
@@ -177,6 +182,20 @@
 
                 };
 
+                vm.deleteWorkspace = function (idx) {
+
+                    if (vm.workspaces[idx].name != 'Default') {
+                        if ($window.confirm('Are you sure you want to delete this workspace and all the files in it?')) {
+                            vm.workspaces.splice(idx, 1);
+                            vm.selectWorkspace(0);
+                        }
+                    }
+                    else {
+                        alert('Default workspace cannot be deleted');
+                    }
+
+                }
+
                 vm.deleteFile = function (idx) {
 
                     if (vm.files[idx].name != 'index.html') {
@@ -189,13 +208,12 @@
                         alert('index.html cannot be deleted');
                     }
 
-
                 }
 
                 init();
 
                 function init() {
-                   
+
                     //set the default settings
                     vm.settings = SETTINGS;
                     vm.actSize = 'fit';
@@ -213,7 +231,7 @@
                         vm.libraries = result.data.categories;
                     });
 
-                     DataService.getTemplates().then(function (result) {
+                    DataService.getTemplates().then(function (result) {
                         vm.templates = result.data.templates;
 
                         if (localStorageService.isSupported) {
@@ -232,7 +250,7 @@
                         else {
                             vm.addWorkspace('Default', 0);
                         }
-                     });
+                    });
 
 
                 }
@@ -404,8 +422,10 @@
                 vm.downloadZip = function () {
                     var zip = new JSZIP();
 
-                    angular.forEach(vm.files, function (file) {
-                        zip.file(file.name, file.value)
+                    angular.forEach(vm.workspaces, function (wrk) {
+                        angular.forEach(wrk.files, function (file) {
+                            zip.file(wrk.name + '/' + file.name, file.value)
+                        })
                     })
 
                     //add the generated preview html file
