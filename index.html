@@ -98,7 +98,7 @@
                             <li class="dropdown-header">Workspace</li>
                             <li>
                                 <a href="#" style="display:inline-block;clear:none;width:80%;" ng-repeat-start="wrk in vm.workspaces" ng-click="vm.selectWorkspace($index)">{{wrk.name}}</a>
-                                <span style="float:right;padding-right:8px;" ng-repeat-end ng-click="vm.deleteWorkspace($index)"><i class="delete icon-cancel"></i></span>
+                                <span style="float:right;padding-right:8px;" ng-if="$index>0" ng-repeat-end ng-click="vm.deleteWorkspace($index)"><i class="delete icon-cancel"></i></span>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Create New</li>
