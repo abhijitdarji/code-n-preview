@@ -15,6 +15,7 @@
 ##### Editor
 * [CodeMirror](http://codemirror.net/doc/compress.html)
 * [Emmet](https://github.com/emmetio/codemirror)
+* [Inlet](https://github.com/enjalot/Inlet)
 
 ##### Compilers
 * [Coffee-Script](http://coffeescript.org)
@@ -61,16 +62,17 @@ Generated using [Fontello](http://fontello.com)
 * Use snippets to add code blocks to html/js/css file 
 * Snippets uses emmet snippets and abbreviations which means it can also be added in the editor without using menu
 * Download project files as zip
-* File types supported: HTML, CSS, JS, LESS, SASS, SCSS, JADE, MD, MARKDOWN, COFFEE, STYL, TS
+* File types supported: HTML, CSS, JS, LESS, SASS, SCSS, JADE, MD, MARKDOWN, COFFEE, STYL, TS, JSON, TXT
 
 ##### Editor
 
 * Supports Emmet 
 * Code Beautify
-* Code Linting ([HTML](http://htmlhint.com), [JS](http://jshint.com), [CSS](http://csslint.net), [COFFEE](http://www.coffeelint.org))
+* Code Linting ([HTML](http://htmlhint.com), [JS](http://jshint.com), [CSS](http://csslint.net), [COFFEE](http://www.coffeelint.org), JSON)
 * Full Screen Editing
 * Live Compilation
 * Snippets
+* Color Picker (on hsl, hex, rgb values)
 
 ###### Keyboard shortcuts
 Editor:
