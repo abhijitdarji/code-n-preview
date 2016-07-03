@@ -21,8 +21,9 @@
         .constant('SASS', window.Sass)
         .constant('STYLUS', window.stylus)
         .constant('TYPESCRIPT', ts)
-        .constant('DEXIE', window.Dexie)
-        .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown|ts)$/i)
+        .constant('DEXIE', window.Dexie) //index db add update
+        .constant('INLET', window.Inlet) //css color picker
+        .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown|ts|json|txt)$/i)
         .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown|ts)$/i)
         .constant('SETTINGS', {
             preview_delay: 500,

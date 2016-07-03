@@ -35,6 +35,7 @@
     <script src="scripts/beautify/beautify-css.js"></script>
     <script src="scripts/beautify/beautify-html.js"></script>
     <script src="scripts/editor/emmet.js"></script>
+    <script src="scripts/editor/inlet.js"></script>
 
     <!--Linting-->
     <script src="scripts/editor/jshint.js"></script>
@@ -183,7 +184,7 @@
 
             <div ng-repeat="file in vm.files">
                 <div ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
-                    <i class="{{file.ext}} ng-class:{'html':'icon-html5-01','js':'icon-prog-js02','css':'icon-css3-01','less':'icon-css3-01','sass':'icon-css3-01','scss':'icon-css3-01','coffee':'icon-prog-coffeescr','md':'icon-markdown','markdown':'icon-markdown','jade':'icon-html5-01','styl':'icon-css3-01','ts':'icon-prog-js01'}[file.ext]"></i>
+                    <i class="{{file.ext}} ng-class:{'html':'icon-html5-01','js':'icon-prog-js02','css':'icon-css3-01','less':'icon-css3-01','sass':'icon-css3-01','scss':'icon-css3-01','coffee':'icon-prog-coffeescr','md':'icon-markdown','markdown':'icon-markdown','jade':'icon-html5-01','styl':'icon-css3-01','ts':'icon-prog-js01','txt':'icon-doc-text'}[file.ext]"></i>
                     <a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
                     <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
                         <a href="" ng-click="vm.deleteFile($index)"><i class="delete icon-cancel"></i></a>
@@ -207,7 +208,7 @@
                     <button type="button" ng-click="vm.addNew = false;" class="btn btn-default btn-sm">Cancel</button>
                     <br/> <br/>
                     <div class="alert alert-info">
-                        <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl, ts
+                        <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl, ts, json, txt
                     </div>
                 </form>
                 <a href="" id="aNewFile" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
