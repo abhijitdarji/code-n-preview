@@ -6,7 +6,7 @@
             "files": [
                 {
                     "name": "index.html",
-                    "template": "<!-- your html code here -->"
+                    "template": "<!DOCTYPE html>\n <html lang=\"en\">\n <head>\n   <meta charset=\"UTF-8\" \/>\n   <title>Title<\/title>\n <\/head>\n <body>\n   Something\n <\/body>\n <\/html>"
                 },
                 {
                     "name": "scripts.js",
@@ -42,33 +42,69 @@
             "files": [
                 {
                     "name": "index.html",
-                    "template": "<!-- your html code here -->"
+                    "templateUrl": "templates/bootstrapstarter/"
                 },
                 {
                     "name": "scripts.js",
-                    "template": "//your javascript code here"
+                    "templateUrl": "templates/bootstrapstarter/"
                 },
                 {
-                    "name": "styles.less",
-                    "template": "//your styles here"
+                    "name": "styles.css",
+                    "templateUrl": "templates/bootstrapstarter/"
                 }
             ]
         },
         {
             "id": 3,
-            "name": "HTML 5 Boilerplate",
+            "name": "HTML5 Starter",
             "files": [
                 {
                     "name": "index.html",
-                    "template": "<!-- your html code here -->"
+                    "templateUrl": "templates/html5starter/"
+                },
+                {
+                    "name": "main.js",
+                    "templateUrl": "templates/html5starter/"
+                },
+                {
+                    "name": "main.css",
+                    "templateUrl": "templates/html5starter/"
+                },
+                {
+                    "name": "normalize.css",
+                    "templateUrl": "templates/html5starter/"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Bootstrap Tester",
+            "files": [
+                {
+                    "name": "index.html",
+                    "templateUrl": "templates/bootstraptester/"
                 },
                 {
                     "name": "scripts.js",
-                    "template": "//your javascript code here"
+                    "templateUrl": "templates/bootstraptester/"
                 },
                 {
-                    "name": "styles.less",
-                    "template": "//your styles here"
+                    "name": "styles.css",
+                    "templateUrl": "templates/bootstraptester/"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Angular Starter",
+            "files": [
+                {
+                    "name": "index.html",
+                    "templateUrl": "templates/angularstarter/"
+                },
+                {
+                    "name": "scripts.js",
+                    "templateUrl": "templates/angularstarter/"
                 }
             ]
         }

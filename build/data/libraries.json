@@ -18,14 +18,9 @@
                         {
                             "ver": "1.5.0",
                             "dependencies": [],
-                            "styles": [
-                                "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css",
-                                "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
-                            ],
+                            "styles": [ ],
                             "scripts": [
-                                "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js",
-                                "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-animate.min.js",
-                                "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.min.js"
+                                "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"
                             ]
                         },
                         {
@@ -60,11 +55,33 @@
                             ]
                         },
                         {
+                            "ver": "1.12.0",
+                            "dependencies": [],
+                            "styles": [],
+                            "scripts": [
+                                "https://code.jquery.com/jquery-1.12.0.min.js"
+                            ]
+                        },
+                        {
                             "ver": "2.0.0",
                             "dependencies": [],
                             "styles": [],
                             "scripts": [
                                 "//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Modernizr",
+                    "short": "modernizr",
+                    "versions": [
+                        {
+                            "ver": "2.8.3",
+                            "dependencies": [],
+                            "styles": [],
+                            "scripts": [
+                                "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
                             ]
                         }
                     ]

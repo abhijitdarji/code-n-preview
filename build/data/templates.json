@@ -1,1 +1,112 @@
-{}
+{
+    "templates": [
+        {
+            "id": 0,
+            "name": "Blank",
+            "files": [
+                {
+                    "name": "index.html",
+                    "template": "<!DOCTYPE html>\n <html lang=\"en\">\n <head>\n   <meta charset=\"UTF-8\" \/>\n   <title>Title<\/title>\n <\/head>\n <body>\n   Something\n <\/body>\n <\/html>"
+                },
+                {
+                    "name": "scripts.js",
+                    "template": "//your javascript code here"
+                },
+                {
+                    "name": "styles.less",
+                    "template": "//your styles here"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "name": "Angular TODO MVC",
+            "files": [
+                {
+                    "name": "index.html",
+                    "templateUrl": "templates/angulartodomvc/"
+                },
+                {
+                    "name": "todo.js",
+                    "templateUrl": "templates/angulartodomvc/"
+                },
+                {
+                    "name": "todo.css",
+                    "templateUrl": "templates/angulartodomvc/"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Bootstrap Starter",
+            "files": [
+                {
+                    "name": "index.html",
+                    "templateUrl": "templates/bootstrapstarter/"
+                },
+                {
+                    "name": "scripts.js",
+                    "templateUrl": "templates/bootstrapstarter/"
+                },
+                {
+                    "name": "styles.css",
+                    "templateUrl": "templates/bootstrapstarter/"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "HTML5 Starter",
+            "files": [
+                {
+                    "name": "index.html",
+                    "templateUrl": "templates/html5starter/"
+                },
+                {
+                    "name": "main.js",
+                    "templateUrl": "templates/html5starter/"
+                },
+                {
+                    "name": "main.css",
+                    "templateUrl": "templates/html5starter/"
+                },
+                {
+                    "name": "normalize.css",
+                    "templateUrl": "templates/html5starter/"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Bootstrap Tester",
+            "files": [
+                {
+                    "name": "index.html",
+                    "templateUrl": "templates/bootstraptester/"
+                },
+                {
+                    "name": "scripts.js",
+                    "templateUrl": "templates/bootstraptester/"
+                },
+                {
+                    "name": "styles.css",
+                    "templateUrl": "templates/bootstraptester/"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Angular Starter",
+            "files": [
+                {
+                    "name": "index.html",
+                    "templateUrl": "templates/angularstarter/"
+                },
+                {
+                    "name": "scripts.js",
+                    "templateUrl": "templates/angularstarter/"
+                }
+            ]
+        }
+    ]
+}

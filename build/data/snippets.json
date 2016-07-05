@@ -10,14 +10,14 @@
                         "group": "General",
                         "snip": [
                             {
-                                "command": "ard",
-                                "label": "ARD Comment",
-                                "description": "Simple ard text comment"
+                                "command": "!",
+                                "label": "Html 5 Doc",
+                                "description": "Doc type html5"
                             },
                             {
-                                "command": "ardm",
-                                "label": "ARD 3 ListItems",
-                                "description": "Simple Unordered list with 3 list items"
+                                "command": "script:src",
+                                "label": "Script src",
+                                "description": "Simple script tag with src"
                             }
                         ]
                     },
@@ -25,14 +25,14 @@
                         "group": "Other",
                         "snip": [
                             {
-                                "command": "ard",
-                                "label": "ARD Comment",
-                                "description": "Simple ard text comment"
+                                "command": "meta:vp",
+                                "label": "Meta Viewport",
+                                "description": "Viewport meta tag"
                             },
                             {
-                                "command": "ardm",
-                                "label": "ARD 3 ListItems",
-                                "description": "Simple Unordered list with 3 list items"
+                                "command": "meta:compat",
+                                "label": "Meta Compatibility",
+                                "description": "Compatibility meta tag"
                             }
                         ]
                     }
