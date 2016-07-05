@@ -1,0 +1,216 @@
+{
+    "def": {
+        "categories": [
+            {
+                "type": "HTML5",
+                "short": "html",
+                "imgurl": "",
+                "snippets": [
+                    {
+                        "group": "General",
+                        "snip": [
+                            {
+                                "command": "!",
+                                "label": "Html 5 Doc",
+                                "description": "Doc type html5"
+                            },
+                            {
+                                "command": "script:src",
+                                "label": "Script src",
+                                "description": "Simple script tag with src"
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Other",
+                        "snip": [
+                            {
+                                "command": "meta:vp",
+                                "label": "Meta Viewport",
+                                "description": "Viewport meta tag"
+                            },
+                            {
+                                "command": "meta:compat",
+                                "label": "Meta Compatibility",
+                                "description": "Compatibility meta tag"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "CSS",
+                "short": "css",
+                "imgurl": "",
+                "snippets": [
+                    {
+                        "group": "Visibility",
+                        "snip": [
+                            {
+                                "command": "d:n",
+                                "label": "Display None",
+                                "description": "Display None"
+                            },
+                            {
+                                "command": "ov:h",
+                                "label": "Overflow Hidden",
+                                "description": "Overflow Hidden"
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Animation",
+                        "snip": [
+                            {
+                                "command": "anim-",
+                                "label": "Animation all param",
+                                "description": "css animation"
+                            },
+                            {
+                                "command": "animn",
+                                "label": "Animation Name",
+                                "description": "css animation name"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "Bootstrap",
+                "short": "boot",
+                "imgurl": "",
+                "snippets": [
+                    {
+                        "group": "Navbar",
+                        "snip": [
+                            {
+                                "command": "bsnavbar",
+                                "label": "Navbar Default",
+                                "description": "Bootstrap navbar default"
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Sections",
+                        "snip": [
+                            {
+                                "command": "bscont",
+                                "label": "Container",
+                                "description": "Bootstrap container"
+                            },
+                            {
+                                "command": "bscontf",
+                                "label": "Container Fluid",
+                                "description": "Bootstrap container fluid"
+                            },
+                            {
+                                "command": "bs3col",
+                                "label": "3 Col Grid",
+                                "description": "Bootstrap 3 Col Grid"
+                            },
+                            {
+                                "command": "bstab",
+                                "label": "Table",
+                                "description": "Bootstrap Table"
+                            },
+                            {
+                                "command": "bstabstr",
+                                "label": "Table Striped",
+                                "description": "Bootstrap Table Striped"
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Form",
+                        "snip": [
+                            {
+                                "command": "bsform",
+                                "label": "Basic Form",
+                                "description": "Bootstrap Basic Form"
+                            },
+                            {
+                                "command": "bsformin",
+                                "label": "Inline Form",
+                                "description": "Bootstrap Inline Form"
+                            },
+                            {
+                                "command": "bsformhor",
+                                "label": "Form Horizontal",
+                                "description": "Bootstrap Form Horizontal"
+                            },
+                            {
+                                "command": "bsingrp",
+                                "label": "Input Group",
+                                "description": "Bootstrap Input Group"
+                            },
+                            {
+                                "command": "bsaddr",
+                                "label": "Address",
+                                "description": "Bootstrap Address"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "snippets": {
+        "html": {
+            "snippets": {
+                "ard": "<!-- ard -->"
+            },
+            "abbreviations": {
+                "ardm": "ul>li.list{item $$}*3",
+                "ardhead": "header>h1>a[href=index.html]{This is a landing page}^p.lead{This is a description of this page}",
+                "bscont": ".container",
+                "bscontf": ".container-fluid",
+                "bs3col": ".row>.col-sm-3*3",
+                "bstc": "p.text-center",
+                "bstr": "p.text-right",
+                "bstup": "p.text-uppercase",
+                "bstab": "table.table",
+                "bstabstr": "table.table.table-striped",
+                "bsform": "form>.form-group>label[for='email']{Email address}+input:email.form-control[id='email' placeholder='Email']^.form-group>label[for='pwd']{Password}+input:password.form-control[id='pwd' placeholder='Password']^.checkbox>label>input:checkbox{Check Me}^^button:submit.btn.btn-default{Submit}+{}",
+                "bsformin": "form.form-inline>.form-group>label.sr-only[for='email']{Email address}+input:email.form-control[id='email' placeholder='Email']^.form-group>label.sr-only[for='pwd']{Password}+input:password.form-control[id='pwd' placeholder='Password']^.checkbox>label>input:checkbox{Check Me}^^button:submit.btn.btn-default{Submit}+{}",
+                "bsformhor": "form.form-horizontal>.form-group>label.col-xs-2.control-label[for='email']{Email}+.col-xs-10>input:email.form-control[id='email' placeholder='Email']^^.form-group>label.col-xs-2.control-label[for='pwd']{Password}+.col-xs-10>input:password.form-control[id='pwd' placeholder='Password']^^.form-group>.col-xs-offset-2.col-xs-10>.checkbox>label>input:checkbox{Check Me}^^^^.form-group>.col-xs-offset-2.col-xs-10>button:submit.btn.btn-default{Sign in}+{}",
+                "bsingrp": ".input-group>.input-group-addon{\\$}+input:text.form-control[placeholder='Amount']+.input-group-addon{.00}+{}",
+                "bsaddr": "address>strong{Cnp Inc}+br+{1000 Street, Suite 999}+br+{San Fransisco, CA 12345}+br+abbr[title='Phone']{P:}+{(123)-456-7890}+{}",
+                "bsnavbar": ".navbar>ul>li*4>a[href=#]{link $}",
+                "bscarousel": ".carousel.slide#carousel-example>(ol.carousel-indicators>li[data-target=#carousel-example data-slide-to=$]*3)(.carousel-inner>.item*3>img[src=http://lorempixel.com/1170/300 alt=Image]+.carousel-caption{This is a caption $})(a[href=carousel-example data-slide=prev].left.carousel-control>span.icon-prev^a[href=carousel-example data-slide=next].right.carousel-control>span.icon-next)",
+                "bssec:features": "section#features>h3{Product Features}+p{Here's why you should really buy this product.}+hr+(.row>.col-lg-4>.media>a[href=#].pull-left>img[src=http://lorempixel.com/64/64 alt=Image]^.media-body>h4.media-heading{Feature name}+p>lorem10)*4",
+                "bssec:order": "section#order>.well.well-lg>h3.text-center{Order now!}+p.text-center{Receive a great bonus}+p.text-center>a[href=#].btn.btn-primary{Place order &rarr;}",
+                "bssec:test": "section#testimonials>.panel>.panel-heading{A few words from our customers.}+.row>(.col-lg-6>blockquote>lorem10+small{John from}>cite{Source})*2"
+            }
+        },
+        "css": {
+            "snippets": {
+                "mza": "margin: 0 auto;"
+            }
+        },
+        "javascript": {
+            "snippets": {
+                "forard": "for (var ${class} = 0; i < ${id}.length; ${class}++) {\n\t|}"
+            }
+        },
+        "jade": {
+            "filters": "jade",
+            "extends": "html",
+            "profile": "xml"
+        },
+        "scss": {
+            "extends": "css"
+        },
+        "sass": {
+            "extends": "css"
+        },
+        "less": {
+            "extends": "css"
+        },
+        "stylus": {
+            "extends": "css"
+        },
+        "styl": {
+            "extends": "stylus"
+        }
+    }
+}

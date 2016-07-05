@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular Basic Starter Template</title>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js" data-cnp="angularjs-m"></script>
+</head>
+
+<body>
+    <h2>Angular Starter</h2>
+    <div ng-controller="myCtrl as vm">
+        {{vm.message}}
+        <br />
+        <br />
+        <label for="name">Name:</label>
+        <input type="text" id="name" ng-model="vm.name" />
+        <div ng-if="vm.name">
+            <p>Hello {{vm.name}}!</p>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
