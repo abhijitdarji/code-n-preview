@@ -103,6 +103,15 @@ body{
 .download{
     color: forestgreen;
 }
+.delete-wrk{
+    float:right;
+    padding-right:8px;
+    background-color: red;
+    cursor: pointer;
+}
+.delete-wrk i{
+    color: white;
+}
 
 
 /*form alert*/

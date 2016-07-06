@@ -24,15 +24,15 @@
             "files": [
                 {
                     "name": "index.html",
-                    "templateUrl": "templates/angulartodomvc/"
+                    "templateUrl": "templates/AngularTodoMvc/"
                 },
                 {
                     "name": "todo.js",
-                    "templateUrl": "templates/angulartodomvc/"
+                    "templateUrl": "templates/AngularTodoMvc/"
                 },
                 {
                     "name": "todo.css",
-                    "templateUrl": "templates/angulartodomvc/"
+                    "templateUrl": "templates/AngularTodoMvc/"
                 }
             ]
         },
@@ -42,15 +42,15 @@
             "files": [
                 {
                     "name": "index.html",
-                    "templateUrl": "templates/bootstrapstarter/"
+                    "templateUrl": "templates/BootstrapStarter/"
                 },
                 {
                     "name": "scripts.js",
-                    "templateUrl": "templates/bootstrapstarter/"
+                    "templateUrl": "templates/BootstrapStarter/"
                 },
                 {
                     "name": "styles.css",
-                    "templateUrl": "templates/bootstrapstarter/"
+                    "templateUrl": "templates/BootstrapStarter/"
                 }
             ]
         },
@@ -60,19 +60,19 @@
             "files": [
                 {
                     "name": "index.html",
-                    "templateUrl": "templates/html5starter/"
+                    "templateUrl": "templates/HTML5Starter/"
                 },
                 {
                     "name": "main.js",
-                    "templateUrl": "templates/html5starter/"
+                    "templateUrl": "templates/HTML5Starter/"
                 },
                 {
                     "name": "main.css",
-                    "templateUrl": "templates/html5starter/"
+                    "templateUrl": "templates/HTML5Starter/"
                 },
                 {
                     "name": "normalize.css",
-                    "templateUrl": "templates/html5starter/"
+                    "templateUrl": "templates/HTML5Starter/"
                 }
             ]
         },
@@ -82,15 +82,15 @@
             "files": [
                 {
                     "name": "index.html",
-                    "templateUrl": "templates/bootstraptester/"
+                    "templateUrl": "templates/BootstrapTester/"
                 },
                 {
                     "name": "scripts.js",
-                    "templateUrl": "templates/bootstraptester/"
+                    "templateUrl": "templates/BootstrapTester/"
                 },
                 {
                     "name": "styles.css",
-                    "templateUrl": "templates/bootstraptester/"
+                    "templateUrl": "templates/BootstrapTester/"
                 }
             ]
         },
@@ -100,11 +100,11 @@
             "files": [
                 {
                     "name": "index.html",
-                    "templateUrl": "templates/angularstarter/"
+                    "templateUrl": "templates/AngularStarter/"
                 },
                 {
                     "name": "scripts.js",
-                    "templateUrl": "templates/angularstarter/"
+                    "templateUrl": "templates/AngularStarter/"
                 }
             ]
         }

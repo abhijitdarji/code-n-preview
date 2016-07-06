@@ -516,7 +516,12 @@
                 vm.addWorkspace = function(name, type) {
 
                     if (name == null) {
-                        name = prompt("Please enter workspace name", "HTML Sample");
+                        name = $window.prompt("Please enter workspace name", "New Workspace");
+                        if(name == '' || name.length > 14){
+                            alert('Name should be less than 15 characters.');
+                            name = null;
+                            vm.addWorkspace(name,type);
+                        }
                     }
 
                     if (name != null) {
