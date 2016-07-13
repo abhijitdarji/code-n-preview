@@ -349,3 +349,66 @@ li.dropdown-delicon > div.row:focus, li.dropdown-delicon > div.row:hover{
 li.dropdown-delicon > div.row a{
     text-decoration:none;
 }
+
+/* DROPDOWN SLIDE*/
+.tools{
+    position:absolute;
+    top:0;
+    right:0;
+    float:right;
+    z-index:99;
+    opacity: 0.7;
+}
+.tools:hover{
+    opacity: 1;
+}
+
+.tools .open > .dropdown-menu {
+  -webkit-transform: scale(1, 1);
+  transform: scale(1, 1);
+
+}
+.tools .open > .dropdown-menu li a {
+  color: #000;  
+}
+.tools .dropdown-menu li a{
+  color: #fff;
+}
+.tools .dropdown-menu li > div{
+  padding-left:20px;
+}
+
+.tools .dropdown-menu {
+  -webkit-transform-origin: top;
+  transform-origin: top;
+  -webkit-animation-fill-mode: forwards;  
+  animation-fill-mode: forwards; 
+  -webkit-transform: scale(1, 0);
+  transform: scale(1, 0);
+  display: block;
+  right:0;
+  left:auto;
+  
+  transition: all 0.2s ease-out;
+  -webkit-transition: all 0.2s ease-out;
+}
+.tools .dropup .dropdown-menu {
+  -webkit-transform-origin: bottom;
+  transform-origin: bottom;  
+}
+
+/*.tools .navbar .nav > li > .dropdown-menu:after {
+
+}*/
+.tools .dropup > .dropdown-menu:after {
+  border-bottom: 0;
+  border-top: 6px solid rgba(39, 45, 51, 0.9);
+  top: auto;
+  display: inline-block;
+  bottom: -6px;
+  content: '';
+  position: absolute;
+  left: 50%;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+}

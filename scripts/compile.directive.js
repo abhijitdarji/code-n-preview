@@ -5,8 +5,8 @@
         .module('myapp')
         .directive('compile', compile);
 
-    compile.$inject = ['$compile', 'CompileService', 'HTML_BEAUTIFY', '$q', 'COMPILE_TYPES'];
-    function compile($compile, CompileService, HTML_BEAUTIFY, $q, COMPILE_TYPES) {
+    compile.$inject = ['$compile', 'CompileService', 'HTML_BEAUTIFY', '$q', 'COMPILE_TYPES','COMPILE_MAP'];
+    function compile($compile, CompileService, HTML_BEAUTIFY, $q, COMPILE_TYPES, COMPILE_MAP) {
         // Usage:
         // watches editor for changes and generates preview html
         var directive = {
@@ -30,7 +30,9 @@
                     return doctype;
                 }
 
-                function insertOrUpdate(filename, value) {
+                function insertOrUpdate(filename, value, compiled) {
+                    compiled = compiled || false;
+
                     var exists = scope.vm.files.some(function (file) {
                         return file.name == filename
                     });
@@ -44,31 +46,20 @@
                         scope.vm.saveFilesToLocal();
                     }
                     else {
-                        scope.vm.addNewFile(filename, value);
+                        scope.vm.addNewFile(filename, value, compiled);
                     };
                 }
 
                 function compileSource(name) {
                     var deferred = $q.defer();
-                    var master = {
-                        'LESS': '.css',
-                        'COFFEE': '.js',
-                        'JADE': '.html',
-                        'MARKDOWN': '.html',
-                        'MD': '.html',
-                        'SASS': '.css',
-                        'SCSS': '.css',
-                        'STYL': '.css',
-                        'TS': '.js'
-                    }
                     if (name.match(COMPILE_TYPES)) {
                         var type = name.match(COMPILE_TYPES)[0],
                             fileExt, compileType, out;
                         var regex = new RegExp(type.substring(1, type.length), "i");
-                        for (var key in master) {
+                        for (var key in COMPILE_MAP) {
                             if (regex.test(key)) {
                                 compileType = key;
-                                fileExt = master[key];
+                                fileExt = COMPILE_MAP[key];
                             }
                         }
                         CompileService.compile(compileType, scope.vm.dynFile.value).then(function (result) {
@@ -89,7 +80,7 @@
                             }
 
                             var filename = scope.vm.dynFile.name.substr(0, scope.vm.dynFile.name.length - type.length) + fileExt;
-                            insertOrUpdate(filename, out);
+                            insertOrUpdate(filename, out, true);
                             deferred.resolve('done');
                         });
                     }

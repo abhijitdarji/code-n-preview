@@ -25,9 +25,22 @@
         .constant('INLET', window.Inlet) //css color picker
         .constant('FILE_TYPES', /\.(html|css|js|less|coffee|jade|sass|scss|styl|md|markdown|ts|json|txt)$/i)
         .constant('COMPILE_TYPES', /\.(less|coffee|jade|sass|scss|styl|md|markdown|ts)$/i)
+        .constant('COMPILE_MAP',
+        {
+            'LESS': '.css',
+            'COFFEE': '.js',
+            'JADE': '.html',
+            'MARKDOWN': '.html',
+            'MD': '.html',
+            'SASS': '.css',
+            'SCSS': '.css',
+            'STYL': '.css',
+            'TS': '.js'
+        })
         .constant('SETTINGS', {
             preview_delay: 500,
             auto_refresh: true,
+            view_compiled: false,
             mobile: 700,
             tablet: 900,
             laptop: 1100,

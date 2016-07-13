@@ -1,4 +1,4 @@
-(function() {
+(function () {
     "use strict";
     angular.module('myapp')
         .controller("appController",
@@ -15,7 +15,9 @@
             'DEXIE',
             'INLET',
             'DataService',
-            function($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE, INLET, DataService) {
+            'COMPILE_TYPES',
+            'COMPILE_MAP',
+            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE, INLET, DataService, COMPILE_TYPES, COMPILE_MAP) {
                 var vm = this;
                 vm.Math = $window.Math;
                 vm.dynFile = {};
@@ -35,15 +37,15 @@
 
                     //set the libraries menu
                     var temp;
-                    angular.forEach(vm.templates, function(tp) {
+                    angular.forEach(vm.templates, function (tp) {
                         if (tp.id == id) temp = tp;
                     })
 
                     vm.files = [];
-                    angular.forEach(temp.files, function(file) {
+                    angular.forEach(temp.files, function (file) {
 
                         if (angular.isDefined(file.templateUrl)) {
-                            DataService.getTemplateFromUrl(file.name, file.templateUrl).then(function(result) {
+                            DataService.getTemplateFromUrl(file.name, file.templateUrl).then(function (result) {
                                 vm.addNewFile(file.name, result.data);
                             })
                         }
@@ -56,14 +58,14 @@
                     wrk.files = vm.files;
                 }
 
-                vm.addWorkspace = function(name, type) {
+                vm.addWorkspace = function (name, type) {
 
                     if (name == null) {
                         name = $window.prompt("Please enter workspace name", "New Workspace");
-                        if(name == '' || name.length > 14){
+                        if (name == '' || name.length > 14) {
                             alert('Name should be less than 15 characters.');
                             name = null;
-                            vm.addWorkspace(name,type);
+                            vm.addWorkspace(name, type);
                         }
                     }
 
@@ -76,23 +78,23 @@
                     }
                 }
 
-                vm.selectWorkspace = function(id) {
+                vm.selectWorkspace = function (id) {
                     vm.curWrk = vm.workspaces[id];
                     vm.files = vm.curWrk.files;
                     vm.dynFile = {};
                     vm.previewHTML = '';
                     vm.saveFilesToLocal();
-                    angular.forEach(vm.files, function(file) {
+                    angular.forEach(vm.files, function (file) {
                         if (file.name == 'index.html') {
                             vm.setEditorValue(file);
                         }
                     });
                 }
 
-                vm.saveFilesToLocal = function() {
+                vm.saveFilesToLocal = function () {
                     vm.curWrk.files = vm.files;
 
-                    angular.forEach(vm.workspaces, function(wrk) {
+                    angular.forEach(vm.workspaces, function (wrk) {
                         if (vm.curWrk.name == wrk.name) wrk.files = vm.curWrk.files;
                     });
 
@@ -102,7 +104,7 @@
                         var dbname = 'cnpDB';
 
                         DEXIE.exists(dbname)
-                            .then(function(exists) {
+                            .then(function (exists) {
                                 if (exists) {
                                     var db = new DEXIE(dbname);
 
@@ -112,7 +114,7 @@
                                         });
 
                                     //copy files to db
-                                    angular.forEach(vm.files, function(file) {
+                                    angular.forEach(vm.files, function (file) {
 
                                         db.files
                                             .put({
@@ -132,7 +134,7 @@
                                         });
 
                                     //copy files to db
-                                    angular.forEach(vm.files, function(file) {
+                                    angular.forEach(vm.files, function (file) {
 
                                         db.files
                                             .add({
@@ -142,17 +144,17 @@
                                             });
                                     })
                                 }
-                            }).catch(function(error) {
+                            }).catch(function (error) {
                                 console.error("Oops, an error occurred when trying to check database existance");
                                 console.log(error);
                             });
                     }
                 };
 
-                vm.fileNotExists = function($value) {
+                vm.fileNotExists = function ($value) {
                     if ($value !== undefined) {
                         if (vm.files === undefined) return true;
-                        var exists = vm.files.some(function(file) {
+                        var exists = vm.files.some(function (file) {
                             return file.name.toLowerCase() == $value.toLowerCase()
                         });
                         return !exists;
@@ -162,7 +164,8 @@
                     }
                 };
 
-                vm.addNewFile = function(name, val) {
+                vm.addNewFile = function (name, val, compiled) {
+                    compiled = compiled || false;
 
                     if (!vm.fileNotExists(name)) {
                         alert('File cannot be added. File with this name already exists.');
@@ -174,7 +177,8 @@
                         vm.files.push({
                             name: name,
                             value: val,
-                            ext: name.split('.').pop().toLowerCase()
+                            ext: name.split('.').pop().toLowerCase(),
+                            compiled: compiled
                         });
                         vm.saveFilesToLocal();
 
@@ -188,7 +192,7 @@
 
                 };
 
-                vm.deleteWorkspace = function(idx) {
+                vm.deleteWorkspace = function (idx) {
 
                     if (vm.workspaces[idx].name != 'Default') {
                         if ($window.confirm('Are you sure you want to delete this workspace and all the files in it?')) {
@@ -202,7 +206,7 @@
 
                 }
 
-                vm.deleteFile = function(idx) {
+                vm.deleteFile = function (idx) {
 
                     if (vm.files[idx].name != 'index.html') {
                         if ($window.confirm('Are you sure you want to delete this file?')) {
@@ -225,7 +229,7 @@
                     vm.actSize = 'fit';
 
                     //set the snippets menu
-                    DataService.getSnippets().then(function(result) {
+                    DataService.getSnippets().then(function (result) {
                         vm.snippetDef = result.data.def;
 
                         //set the snippets on emmet
@@ -233,11 +237,11 @@
                     });
 
                     //set the libraries menu
-                    DataService.getLibraries().then(function(result) {
+                    DataService.getLibraries().then(function (result) {
                         vm.libraries = result.data.categories;
                     });
 
-                    DataService.getTemplates().then(function(result) {
+                    DataService.getTemplates().then(function (result) {
                         vm.templates = result.data.templates;
 
                         if (localStorageService.isSupported) {
@@ -281,9 +285,9 @@
                     extraKeys: {
                         "Ctrl-Space": "autocomplete",
                         "Ctrl-J": "toMatchingTag",
-                        "Ctrl-Q": function(cm) { cm.foldCode(cm.getCursor()); },
-                        "Ctrl-Alt-F": function(cm) { beautify(cm) },
-                        "F11": function(cm) {
+                        "Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); },
+                        "Ctrl-Alt-F": function (cm) { beautify(cm) },
+                        "F11": function (cm) {
                             cm.setOption("fullScreen", !cm.getOption("fullScreen"));
 
                             //show/hide the preview panes and resizer
@@ -296,7 +300,7 @@
                                 window.myLayoutInner.sizePane('west', '50%');
                             }
                         },
-                        "Esc": function(cm) {
+                        "Esc": function (cm) {
                             if (cm.getOption("fullScreen")) {
                                 cm.setOption("fullScreen", false)
                                 //show the preview panes and resizer
@@ -318,18 +322,18 @@
                     }
                 }
 
-                vm.codemirrorLoaded = function(_editor) {
+                vm.codemirrorLoaded = function (_editor) {
                     EMMET_CODEMIRROR(_editor);
                     INLET(_editor);
                     _editor.setSize("100%", "100%");
                     vm.editor = _editor;
                 };
 
-                vm.setEditorValue = function(file) {
+                vm.setEditorValue = function (file) {
                     var source;
 
                     //copy back to file store
-                    angular.forEach(vm.files, function(file) {
+                    angular.forEach(vm.files, function (file) {
                         if (file.name == vm.dynFile.name) {
                             file.value = vm.dynFile.value
                         }
@@ -397,6 +401,12 @@
 
                     vm.dynFile = file;
                     //vm.editor.setValue(source);
+                    setTimeout(function () { gapi.savetodrive.go('editor'); }, 2000);
+                    //make directive
+                    //gapi.savetodrive.render(
+                    //    'editor',
+                    //    {"src": "//example.com/path/to/myfile.pdf", "filename": "My Statement.pdf", "sitename": "My Company Name"}
+                    //);
                 }
 
                 //http://jsbeautifier.org/
@@ -434,11 +444,11 @@
                 }
 
 
-                vm.downloadZip = function() {
+                vm.downloadZip = function () {
                     var zip = new JSZIP();
 
-                    angular.forEach(vm.workspaces, function(wrk) {
-                        angular.forEach(wrk.files, function(file) {
+                    angular.forEach(vm.workspaces, function (wrk) {
+                        angular.forEach(wrk.files, function (file) {
                             zip.file(wrk.name + '/' + file.name, file.value)
                         })
                     })
@@ -447,12 +457,12 @@
                     zip.file('_preview.html', vm.previewHTML)
 
                     zip.generateAsync({ type: "blob" })
-                        .then(function(content) {
+                        .then(function (content) {
                             SAVEAS(content, "codenpreview.zip");
                         });
                 };
 
-                vm.previewWindow = function() {
+                vm.previewWindow = function () {
 
                     if ('serviceWorker' in navigator) {
 
@@ -469,20 +479,20 @@
                     }
                 };
 
-                vm.setDeviceSize = function(size, e) {
+                vm.setDeviceSize = function (size, e) {
                     angular.element('#preview').css({ width: size + 'px' });
                 };
 
-                vm.setFitSize = function() {
+                vm.setFitSize = function () {
                     angular.element('#preview').css({ width: '100%' });
                 };
 
-                vm.setEditorSnippet = function(cmd) {
+                vm.setEditorSnippet = function (cmd) {
                     vm.editor.replaceRange(cmd, vm.editor.getCursor());
                     vm.editor.execCommand('emmet.expand_abbreviation');
                 }
 
-                vm.addLibrary = function(ver, lib) {
+                vm.addLibrary = function (ver, lib) {
 
                     function clearPreviousInsert(doc, data) {
                         $('[data-cnp=' + data + '-d],[data-cnp=' + data + '-m],[data-cnp=' + data + '-y]', doc).remove();
@@ -494,7 +504,7 @@
                         clearPreviousInsert(doc, lib);
 
                         //dependencies
-                        angular.forEach(ver.dependencies, function(src) {
+                        angular.forEach(ver.dependencies, function (src) {
                             var sr = doc.createElement('script');
                             sr.src = src;
                             sr.type = 'text/javascript';
@@ -504,7 +514,7 @@
                         });
 
                         //actual script files
-                        angular.forEach(ver.scripts, function(src) {
+                        angular.forEach(ver.scripts, function (src) {
                             var sr = doc.createElement('script');
                             sr.src = src;
                             sr.type = 'text/javascript';
@@ -514,7 +524,7 @@
                         });
 
                         //styles 
-                        angular.forEach(ver.styles, function(url) {
+                        angular.forEach(ver.styles, function (url) {
                             var link = doc.createElement('link');
                             link.href = url;
                             link.rel = 'stylesheet';
@@ -531,6 +541,46 @@
                         alert('please load html document to add library');
                     }
                 }
+
+                vm.dynViewCompiled = function () {
+                    return vm.dynFile.name && !vm.dynFile.name.match(COMPILE_TYPES);
+                }
+
+                vm.hideCompiled = function () {
+                    var type = vm.dynFile.name.match(COMPILE_TYPES)[0],
+                        fileExt, compFileName;
+                    var regex = new RegExp(type.substring(1, type.length), "i");
+                    for (var key in COMPILE_MAP) {
+                        if (regex.test(key)) {
+                            fileExt = COMPILE_MAP[key];
+                        }
+                    }
+
+                    compFileName = vm.dynFile.name.substr(0, vm.dynFile.name.length - type.length) + fileExt;
+
+                    angular.forEach(vm.files, function (file) {
+                        if (file.name == compFileName) {
+                            file.isVisible = vm.dynFile.view_compiled;
+                        }
+                        else if (file.name == vm.dynFile.name) {
+                            file.view_compiled = vm.dynFile.view_compiled;
+                        }
+                    })
+
+                }
+
+                vm.globViewCompiled = function () {
+                    angular.forEach(vm.files, function (file) {
+                        if (file.compiled) {
+                            file.isVisible = vm.settings.view_compiled;
+                        }
+
+                        if (file.name.match(COMPILE_TYPES)) {
+                            file.view_compiled = vm.settings.view_compiled;
+                        }
+                    })
+                }
+
 
             }])
 

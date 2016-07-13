@@ -8,7 +8,7 @@
     <title>Code & Preview</title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
+    <script src="https://apis.google.com/js/platform.js" async defer>{parsetags: 'explicit'}</script>
 
     <!-- build:js js/lib.js -->
     <script type="text/javascript" src="scripts/layout/jquery.js"></script>
@@ -183,7 +183,7 @@
         <div ng-cloak id="menu" class="ui-layout-west">
 
             <div ng-repeat="file in vm.files">
-                <div ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false">
+                <div ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false" ng-hide="file.compiled && !file.isVisible">
                     <i class="{{file.ext}} ng-class:{'html':'icon-html5-01','js':'icon-prog-js02','css':'icon-css3-01','less':'icon-css3-01','sass':'icon-css3-01','scss':'icon-css3-01','coffee':'icon-prog-coffeescr','md':'icon-markdown','markdown':'icon-markdown','jade':'icon-html5-01','styl':'icon-css3-01','ts':'icon-prog-js01','txt':'icon-doc-text'}[file.ext]"></i>
                     <a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
                     <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
@@ -208,7 +208,8 @@
                     <button type="button" ng-click="vm.addNew = false;" class="btn btn-default btn-sm">Cancel</button>
                     <br/> <br/>
                     <div class="alert alert-info">
-                        <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl, ts, json, txt
+                        <strong>Valid file types:</strong> html, css, js, less, sass, scss, coffee, md, markdown, styl, ts,json,
+                        txt
                     </div>
                 </form>
                 <a href="" id="aNewFile" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
@@ -251,6 +252,11 @@
                                          Auto <input type="checkbox" ng-model="vm.settings.auto_refresh"></span>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                         View compiled <input type="checkbox" ng-model="vm.settings.view_compiled" ng-change="vm.globViewCompiled()"></span>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -282,6 +288,31 @@
                 <div class="editor">
                     <textarea ui-codemirror="{ onLoad : vm.codemirrorLoaded }" ui-codemirror-opts="vm.editorOptions" id="htmlTxt" ng-model="vm.dynFile.value"
                         ng-model-options="vm.modelOptions"></textarea>
+                    <div id="editorActions" class="tools">
+                        <div class="dropdown">
+                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="true">
+                                <i data-toggle="tooltip" data-placement="left" title="Tools" class="icon-angle-circled-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li class="dropdown-header">File</li>
+                                <li>
+                                    <div>
+                                        <span>view compiled</span> <input type="checkbox" ng-model="vm.dynFile.view_compiled" ng-change="vm.hideCompiled()" ng-disabled="vm.dynViewCompiled()">
+                                    </div>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">Upload</li>
+                                <li>
+                                    <div>
+                                        <div class="g-savetodrive" data-src="{{vm.dynFile.name}}" data-filename="{{vm.dynFile.name}}" data-sitename="Code-N-Preview">
+                                        </div>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="prevCenter" class="ui-layout-center">
