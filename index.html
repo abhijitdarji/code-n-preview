@@ -9,6 +9,8 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <script src="https://apis.google.com/js/platform.js" async defer>{parsetags: 'explicit'}</script>
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
 
     <!-- build:js js/lib.js -->
     <script type="text/javascript" src="scripts/layout/jquery.js"></script>
@@ -213,6 +215,8 @@
                     </div>
                 </form>
                 <a href="" id="aNewFile" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
+                <br/>
+                <a href="" id="gFile" ng-click="vm.showPicker()" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> From Google Drive</a>
             </div>
 
 
@@ -305,10 +309,8 @@
                                 <li class="dropdown-header">Upload</li>
                                 <li>
                                     <div>
-                                        <div class="g-savetodrive" data-src="{{vm.dynFile.name}}" data-filename="{{vm.dynFile.name}}" data-sitename="Code-N-Preview">
-                                        </div>
+                                        <div id="gDrive"></div>
                                     </div>
-
                                 </li>
                             </ul>
                         </div>
