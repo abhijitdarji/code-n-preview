@@ -552,9 +552,8 @@
                                     alt: 'media'
                                 });
 
-                                request.execute(function (resp) {
-                                    console.log(resp);
-                                    vm.addNewFile(name, resp);
+                                request.then(function (resp) {
+                                    vm.addNewFile(name, resp.body);
                                 });
                             }
 
