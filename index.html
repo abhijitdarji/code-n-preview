@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <script src="https://apis.google.com/js/platform.js" async defer>{parsetags: 'explicit'}</script>
-    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script src="https://apis.google.com/js/client.js"></script>
 
     <!-- build:js js/lib.js -->
@@ -151,6 +151,49 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li ng-show="!vm.isSignedIn">
+                        <div id="gSignin2"></div>
+                    </li>
+                    <li class="dropdown" ng-show="vm.isSignedIn">
+                         <img src="images/btn_google_light_normal_ios.png" alt="glogo" style="width:48px;height:48px;display:inline;margin-right:-7px;">
+                        <a href="#" class="dropdown-toggle" style="display:inline;" data-toggle="dropdown">
+                            <!--<i class="icon-user"></i>-->
+                            <strong>{{vm.User.name}}</strong>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="navbar-login">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p class="text-center">
+                                               <span class="letter-circle">{{vm.User.name.charAt(0)}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <p class="text-left"><strong>{{vm.User.name}}</strong></p>
+                                            <p class="text-left small">{{vm.User.email}}</p>
+                                            <p class="text-left">
+                                                <button id="disconnect-button" class="btn btn-danger btn-block btn-sm">Disconnect</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="navbar-login navbar-login-session">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>
+                                               <button id="signout-button" class="btn btn-primary btn-block">Sign Out</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
                     <li ng-class="{ active: vm.actSize=='mobile'}">
                         <a data-toggle="tooltip" data-placement="bottom" title="Mobile" href="" ng-click="vm.actSize='mobile';vm.setDeviceSize(vm.settings.mobile,$event)"><i class="icon-mobile mobile"></i></a>
                     </li>
@@ -185,7 +228,8 @@
         <div ng-cloak id="menu" class="ui-layout-west">
 
             <div ng-repeat="file in vm.files">
-                <div ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false" ng-hide="file.compiled && !file.isVisible">
+                <div ng-class="{selected: file == vm.dynFile}" ng-mouseover="vm.hoverItem[$index] = true" ng-mouseleave="vm.hoverItem[$index] = false"
+                    ng-hide="file.compiled && !file.isVisible">
                     <i class="{{file.ext}} ng-class:{'html':'icon-html5-01','js':'icon-prog-js02','css':'icon-css3-01','less':'icon-css3-01','sass':'icon-css3-01','scss':'icon-css3-01','coffee':'icon-prog-coffeescr','md':'icon-markdown','markdown':'icon-markdown','jade':'icon-html5-01','styl':'icon-css3-01','ts':'icon-prog-js01','txt':'icon-doc-text'}[file.ext]"></i>
                     <a href="" ng-click="vm.setEditorValue(file)">{{file.name}}</a>
                     <div class="pull-right" ng-show="vm.hoverItem[$index] || file == vm.dynFile">
@@ -216,7 +260,7 @@
                 </form>
                 <a href="" id="aNewFile" ng-click="vm.addNew = true;" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> New File</a>
                 <br/>
-                <a href="" id="gFile" ng-click="vm.showPicker()" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> From Google Drive</a>
+                <a href="" id="gFile" ng-hide="vm.addNew"><i class="icon-plus-squared"></i> From Google Drive</a>
             </div>
 
 
@@ -258,7 +302,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                         View compiled <input type="checkbox" ng-model="vm.settings.view_compiled" ng-change="vm.globViewCompiled()"></span>
+                                        View compiled <input type="checkbox" ng-model="vm.settings.view_compiled" ng-change="vm.globViewCompiled()"></span>
                                     </td>
                                 </tr>
                             </table>
@@ -302,7 +346,8 @@
                                 <li class="dropdown-header">File</li>
                                 <li>
                                     <div>
-                                        <span>view compiled</span> <input type="checkbox" ng-model="vm.dynFile.view_compiled" ng-change="vm.hideCompiled()" ng-disabled="vm.dynViewCompiled()">
+                                        <span>view compiled</span> <input type="checkbox" ng-model="vm.dynFile.view_compiled"
+                                            ng-change="vm.hideCompiled()" ng-disabled="vm.dynViewCompiled()">
                                     </div>
                                 </li>
                                 <li role="separator" class="divider"></li>

@@ -2,7 +2,7 @@
     "use strict";
     angular.module('myapp')
         .controller("appController",
-        ['$window',
+        ['$scope','$window',
             'localStorageService',
             'HTML_BEAUTIFY',
             'JS_BEAUTIFY',
@@ -17,7 +17,7 @@
             'DataService',
             'COMPILE_TYPES',
             'COMPILE_MAP',
-            function ($window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE, INLET, DataService, COMPILE_TYPES, COMPILE_MAP) {
+            function ($scope, $window, localStorageService, HTML_BEAUTIFY, JS_BEAUTIFY, CSS_BEAUTIFY, EMMET_CODEMIRROR, JSZIP, SAVEAS, FILE_TYPES, SETTINGS, DEXIE, INLET, DataService, COMPILE_TYPES, COMPILE_MAP) {
                 var vm = this;
                 vm.Math = $window.Math;
                 vm.dynFile = {};
@@ -26,6 +26,8 @@
                 vm.snippets = {};
                 vm.libraries = {};
                 vm.templates = {};
+                vm.isSignedIn;
+                vm.User ={};
 
                 vm.files = [];
                 vm.fileTypes = FILE_TYPES;
@@ -262,9 +264,158 @@
                         }
                     });
 
+                    initializeGoogle();
 
                 }//end init
 
+                function initializeGoogle() {
+                    var developerKey = 'AIzaSyApc4j41xla_dAc74Qw387Py3lR9W24Q1g';
+                    var clientId = "341449015859-0pru6i8ecf7qbif87lkc8c2v1bf81pis.apps.googleusercontent.com"
+                    var scope = 'profile email https://www.googleapis.com/auth/drive.readonly';
+                    var pickerApiLoaded = false;
+                    var driveApiLoaded = false;
+                    var oauthToken;
+                    var auth2; // The Sign-In object.
+                    var signinButton = document.getElementById('gSignin2');
+                    var signoutButton = document.getElementById('signout-button');
+                    var disconnectButton = document.getElementById('disconnect-button');
+                    var pickerButton = document.getElementById('gFile');
+                    signoutButton.onclick = handleSignoutClick;
+                    disconnectButton.onclick = handleDisconnectClick;
+                    pickerButton.onclick = handlePickerClick;
+
+                    function handleSignoutClick(event) {
+                        auth2.signOut();
+                    }
+                    function handleDisconnectClick(event) {
+                        auth2.disconnect();
+                    }
+                    function handlePickerClick(event) {
+                        createPicker();
+                    }
+
+                    gapi.load('auth2', initAuth);
+
+                    gapi.load('picker', {
+                        'callback': onPickerApiLoad
+                    });
+                    gapi.client.load('drive', 'v3', onDriveApiLoad);
+
+                    function initAuth() {
+
+                        var signinChanged = function (isSignedIn) { 
+                            vm.isSignedIn = isSignedIn;
+                            $scope.$apply();
+                        }
+
+                        var userChanged = function (user) { 
+                            if(vm.isSignedIn){
+                                var profile = user.getBasicProfile();
+                                vm.User = {
+                                    image: profile.getImageUrl(),
+                                    name: profile.getName(),
+                                    email: profile.getEmail()
+                                }
+                                oauthToken = user.getAuthResponse().access_token; 
+                            }
+                            $scope.$apply();
+                        };
+                        
+                        gapi.client.setApiKey(developerKey);
+                        auth2 = gapi.auth2.init({
+                            client_id: clientId,
+                            scope: scope
+                        });
+                         // Listen for sign-in state changes. 
+                        auth2.isSignedIn.listen(signinChanged); 
+                        // Handle the initial sign-in state.
+                        //signinChanged(auth2.isSignedIn.get());
+                        // Listen for changes to current user. 
+                        auth2.currentUser.listen(userChanged); 
+
+                         gapi.signin2.render('gSignin2', {
+                                'scope': scope,
+                                'width': 150,
+                                'height': 50
+                                //'longtitle': true,
+                                //'theme': 'dark',
+                                // 'onsuccess': onSuccess,
+                                // 'onfailure': onFailure
+                            });
+
+                    }
+
+                    function onDriveApiLoad() {
+                        driveApiLoaded = true;
+                    }
+
+                    function onPickerApiLoad() {
+                        pickerApiLoaded = true;
+                    }
+
+                    function createPicker() {
+                        var mimes = [
+                            "text/html",
+                            "application/javascript",
+                            "text/css",
+                            "text/x-less",
+                            "text/x-coffeescript",
+                            "application/octet-stream",
+                            "text/x-jade",
+                            "text/x-markdown",
+                            "text/x-sass",
+                            "text/x-scss",
+                            "text/x-styl",
+                            "text/x-typescript",
+                            "application/json",
+                            "text/plain"
+                        ]
+                        if (pickerApiLoaded && oauthToken) {
+                            var docsView = new google.picker.DocsView(google.picker.ViewId.DOCS);
+                            docsView.setParent('ROOT');
+                            docsView.setIncludeFolders(true);
+                            docsView.setMimeTypes(mimes.join(','));
+
+                            var picker = new google.picker.PickerBuilder().
+                                enableFeature(google.picker.Feature.NAV_HIDDEN).
+                                enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
+                                addView(docsView).
+                                setOAuthToken(oauthToken).
+                                setDeveloperKey(developerKey).
+                                setCallback(pickerCallback).
+                                build();
+                            picker.setVisible(true);
+                        }
+                        else{
+                            auth2.signIn();
+                        }
+                    }
+
+                    // A simple callback implementation.
+                    function pickerCallback(data) {
+                        var id;
+                        var name;
+                        if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+                            var doc = data[google.picker.Response.DOCUMENTS][0];
+                            name = doc[google.picker.Document.NAME];
+                            id = doc[google.picker.Document.ID];
+                        }
+
+                        if (driveApiLoaded && id) {
+                            var request = gapi.client.drive.files.get({
+                                fileId: id,
+                                alt: 'media'
+                            });
+
+                            request.then(function (resp) {
+                                vm.addNewFile(name, resp.body);
+                                $scope.$apply();
+                            });
+                        }
+
+                    }
+
+                }
 
                 var delay;
                 var the = {
@@ -402,7 +553,7 @@
                     vm.dynFile = file;
                     //vm.editor.setValue(source);
 
-                    googlePickAndSave('save');
+                    setGoogleSaveURL();
                 }
 
                 //http://jsbeautifier.org/
@@ -439,129 +590,16 @@
                     the.beautify_in_progress = false;
                 }
 
-                function googlePickAndSave(typ) {
-                    if (typ == 'save') {
-                        gapi.savetodrive.render(
-                            'gDrive',
-                            {
-                                "src": "/run/" + vm.dynFile.name,
-                                "filename": vm.dynFile.name,
-                                "sitename": "Code-N-Preview"
-                            }
-                        );
-                    }
-                    else {
-                        //Picker
-
-                        // The Browser API key obtained from the Google Developers Console.
-                        var developerKey = 'AIzaSyApc4j41xla_dAc74Qw387Py3lR9W24Q1g';
-                        // The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
-                        var clientId = "341449015859-0pru6i8ecf7qbif87lkc8c2v1bf81pis.apps.googleusercontent.com"
-                        // Scope to use to access user's photos.
-                        var scope = ['https://www.googleapis.com/auth/drive.readonly'];
-                        var pickerApiLoaded = false;
-                        var driveApiLoaded = false;
-                        var oauthToken;
-
-                        // Use the API Loader script to load google.picker and gapi.auth.
-                        function onApiLoad() {
-                            gapi.load('auth', {
-                                'callback': onAuthApiLoad
-                            });
-                            gapi.load('picker', {
-                                'callback': onPickerApiLoad
-                            });
-                            gapi.client.load('drive', 'v3', onDriveApiLoad);
+                function setGoogleSaveURL() {
+                    gapi.savetodrive.render(
+                        'gDrive',
+                        {
+                            "src": "/run/" + vm.dynFile.name,
+                            "filename": vm.dynFile.name,
+                            "sitename": "Code-N-Preview"
                         }
-                        onApiLoad();
-
-                        function onAuthApiLoad() {
-                            window.gapi.auth.authorize({
-                                'client_id': clientId,
-                                'scope': scope,
-                                'immediate': false
-                            },
-                                handleAuthResult);
-                        }
-
-                        function onDriveApiLoad() {
-                            driveApiLoaded = true;
-                        }
-
-                        function onPickerApiLoad() {
-                            pickerApiLoaded = true;
-                            createPicker();
-                        }
-
-                        function handleAuthResult(authResult) {
-                            if (authResult && !authResult.error) {
-                                oauthToken = authResult.access_token;
-                                createPicker();
-                            }
-                        }
-
-                        // Create and render a Picker object for picking user Photos.
-                        function createPicker() {
-                            var mimes = [
-                                "text/html",
-                                "application/javascript",
-                                "text/css",
-                                "text/x-less",
-                                "text/x-coffeescript",
-                                "application/octet-stream",
-                                "text/x-jade",
-                                "text/x-markdown",
-                                "text/x-sass",
-                                "text/x-scss",
-                                "text/x-styl",
-                                "text/x-typescript",
-                                "application/json",
-                                "text/plain"
-                            ]
-                            if (pickerApiLoaded && oauthToken) {
-                                var docsView = new google.picker.DocsView(google.picker.ViewId.DOCS);
-                                docsView.setParent('ROOT');
-                                docsView.setIncludeFolders(true);
-                                docsView.setMimeTypes(mimes.join(','));
-
-                                var picker = new google.picker.PickerBuilder().
-                                    enableFeature(google.picker.Feature.NAV_HIDDEN).
-                                    enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
-                                    addView(docsView).
-                                    setOAuthToken(oauthToken).
-                                    setDeveloperKey(developerKey).
-                                    setCallback(pickerCallback).
-                                    build();
-                                picker.setVisible(true);
-                            }
-                        }
-
-                        // A simple callback implementation.
-                        function pickerCallback(data) {
-                            var id;
-                            var name;
-                            if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
-                                var doc = data[google.picker.Response.DOCUMENTS][0];
-                                name = doc[google.picker.Document.NAME];
-                                id = doc[google.picker.Document.ID];
-                            }
-
-                            if (driveApiLoaded && id) {
-                                var request = gapi.client.drive.files.get({
-                                    fileId: id,
-                                    alt: 'media'
-                                });
-
-                                request.then(function (resp) {
-                                    vm.addNewFile(name, resp.body);
-                                });
-                            }
-
-                        }
-
-                    }
+                    );
                 }
-
 
                 vm.downloadZip = function () {
                     var zip = new JSZIP();
@@ -698,10 +736,6 @@
                             file.view_compiled = vm.settings.view_compiled;
                         }
                     })
-                }
-
-                vm.showPicker = function () {
-                    googlePickAndSave('pick');
                 }
 
 
