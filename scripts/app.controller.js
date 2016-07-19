@@ -381,7 +381,7 @@
                                 enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
                                 addView(docsView).
                                 setOAuthToken(oauthToken).
-                                //setDeveloperKey(developerKey).
+                                setDeveloperKey(developerKey).
                                 setCallback(pickerCallback).
                                 build();
                             picker.setVisible(true);
