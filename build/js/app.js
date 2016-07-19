@@ -870,6 +870,7 @@
 
                             request.then(function (resp) {
                                 vm.addNewFile(name, resp.body);
+                                $scope.$apply();
                             });
                         }
 

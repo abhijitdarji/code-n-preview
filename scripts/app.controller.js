@@ -309,7 +309,7 @@
                         }
 
                         var userChanged = function (user) { 
-                            if(vm.isSignedIn){
+                            if(user.getAuthResponse().access_token){
                                 var profile = user.getBasicProfile();
                                 vm.User = {
                                     image: profile.getImageUrl(),
@@ -381,7 +381,7 @@
                                 enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
                                 addView(docsView).
                                 setOAuthToken(oauthToken).
-                                setDeveloperKey(developerKey).
+                                //setDeveloperKey(developerKey).
                                 setCallback(pickerCallback).
                                 build();
                             picker.setVisible(true);
