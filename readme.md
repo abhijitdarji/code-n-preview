@@ -2,7 +2,7 @@
 > In browser code editing and preview. Inspired from [Plunker](https://plnkr.co/)
 
 ## [Demo](https://abhijitdarji.github.io/code-n-preview)
-<img src="https://cloud.githubusercontent.com/assets/14065663/16533257/7015b4bc-3fa5-11e6-9552-0b90930ec2d8.png" alt="Screenshot" width="600" height="500">
+<img src="https://cloud.githubusercontent.com/assets/14065663/16962593/514d7ffa-4dc0-11e6-9201-12e99a93c815.png" alt="Screenshot" width="600" height="500">
 
 ## Libraries
 
@@ -63,6 +63,7 @@ Generated using [Fontello](http://fontello.com)
 * Snippets uses emmet snippets and abbreviations which means it can also be added in the editor without using menu
 * Download project files as zip
 * File types supported: HTML, CSS, JS, LESS, SASS, SCSS, JADE, MD, MARKDOWN, COFFEE, STYL, TS, JSON, TXT
+* Save/Download file from google drive 
 
 ##### Editor
 
