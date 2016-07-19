@@ -770,7 +770,7 @@
                         }
 
                         var userChanged = function (user) { 
-                            if(vm.isSignedIn){
+                            if(user.getAuthResponse().access_token){
                                 var profile = user.getBasicProfile();
                                 vm.User = {
                                     image: profile.getImageUrl(),
